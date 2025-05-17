@@ -1,0 +1,3 @@
+[submodule "api/vendor/firebase/php-jwt"]
+    path = api/vendor/firebase/php-jwt
+    url = https://github.com/firebase/php-jwt.git

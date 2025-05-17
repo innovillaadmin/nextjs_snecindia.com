@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merienda:wght@300..900&display=swap");
+
+.react-photo-album--image {
+  border-radius: 5px;
+}
+/* google fonts  */
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: black;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
+
+/* google fonts  */
+
+body {
+  /* background-color: #14213d; */
+  background-color: #f4f7fc;
+}
+.mh-90 {
+  min-height: 100vh;
+}
+.p-02 {
+  padding: 2px;
+}
+.text-small {
+  font-size: "10px";
+}
+.text-base {
+  color: #333333;
+}
+/* .base-gradient {
+  background-image: linear-gradient(310deg, #7928ca, #ff0080);
+} */
+.base-gradient {
+  background-image: linear-gradient(
+    310deg,
+    rgba(255, 165, 0, 1),
+    rgba(255, 200, 0, 1)
+  );
+}
+
+/* scroll bar global */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: yello;
+  /* background-image: linear-gradient(310deg, #7928ca, #ff0080); */
+}
+/* scroll bar global end*/
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-justify {
+  text-align: justify;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+.text_border {
+  text-shadow: 1px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 1px 1px #fff,
+    -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/* Base styles */
+.hero-text-1 {
+  font-size: 128px;
+  line-height: 0.7;
+}
+.hero-text-2 {
+  font-size: 55px;
+  line-height: 0.9;
+}
+.hero-text-3 {
+  font-size: 74px;
+  line-height: 0.8;
+}
+.hero-text-4 {
+  font-size: 61px;
+  line-height: 0.8;
+}
+
+/* Medium screens (up to 768px) */
+@media (max-width: 768px) {
+  .hero-text-1 {
+    font-size: 100px;
+  }
+  .hero-text-2 {
+    font-size: 42px;
+  }
+  .hero-text-3 {
+    font-size: 55px;
+  }
+  .hero-text-4 {
+    font-size: 45px;
+  }
+}
+
+/* Small screens (up to 480px) */
+@media (max-width: 480px) {
+  .hero-text-1 {
+    font-size: 90px;
+  }
+  .hero-text-2 {
+    font-size: 39px;
+  }
+  .hero-text-3 {
+    font-size: 52px;
+  }
+  .hero-text-4 {
+    font-size: 42px;
+  }
+}
+
+/* Extra small screens (up to 320px) */
+@media (max-width: 320px) {
+  .hero-text-1 {
+    font-size: 70px;
+  }
+  .hero-text-2 {
+    font-size: 29px;
+  }
+  .hero-text-3 {
+    font-size: 39px;
+  }
+  .hero-text-4 {
+    font-size: 32px;
+  }
+}
+
+.text-bold {
+  font-weight: bolder;
+}
+
+/* index hero  */
+.hero-section {
+  position: relative;
+  height: 101vh;
+  overflow: hidden;
+  margin-top: -60px;
+}
+.hero-container {
+  padding-top: 100px;
+}
+.custom-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  background: linear-gradient(
+    310deg,
+    rgba(255, 165, 0, 0.6),
+    rgba(0, 0, 0, 0.3)
+  );
+  /* background: linear-gradient(
+    310deg,
+    rgba(255, 165, 0, 0.8),
+    rgba(255, 200, 0, 0.5)
+  ); */
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+}
+/* index hero  */
+
+/* minimum width */
+.mw-50 {
+  min-width: 50px;
+}
+.mw-60 {
+  min-width: 60px;
+}
+.mw-70 {
+  min-width: 70px;
+}
+.mw-80 {
+  min-width: 80px;
+}
+.mw-90 {
+  min-width: 90px;
+}
+/* minimum width ends*/

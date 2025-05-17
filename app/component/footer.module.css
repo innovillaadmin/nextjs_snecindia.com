@@ -1,0 +1,16 @@
+.footer_public{
+    background-image: url('./footer-image.png');
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.footer_public ul{
+    list-style-type: none;
+}
+.footer_public ul li a{
+    text-decoration: none;
+    color: black;
+}
+.footer_nav_container{
+    background-color: rgba(255, 255, 255, 0.7);
+}
