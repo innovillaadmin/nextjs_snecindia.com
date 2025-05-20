@@ -27,3 +27,8 @@ export const SELLIO_PROFILE = "/";
 export const PRIVACY_POLICY = "/";
 export const USES_POLICY = "/";
 export const SUPPORT_URL = "/";
+
+export const HERO_BACKGROUND_IMAGE = {
+  backgroundImage:
+    "linear-gradient(310deg, rgba(18, 18, 18, 0.8), rgba(255, 200, 0, 0.3))",
+};

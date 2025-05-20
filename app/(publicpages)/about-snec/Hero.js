@@ -38,7 +38,7 @@ const Hero = () => {
                   {SITENAME}
                 </h1>
                 <h2 className=" bebas-neue-regular p-0 m-0 font-weight-bold  hero-text-3  text_border">
-                  Contact Us
+                  About SSNEC
                 </h2>
               </div>
             </div>

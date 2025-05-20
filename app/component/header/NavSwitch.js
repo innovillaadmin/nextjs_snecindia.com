@@ -173,24 +173,22 @@ const NavSwitch = () => {
               {
                 id: "aboutus",
                 name: "About Us",
-                link: "/",
-                // link: "/about-us",
+                link: "/about-us",
               },
               {
                 id: "About_SNEC",
                 name: "About SSNEC",
-                link: "/",
-                // link: "/pandit-ganesh-shankar-mishra",
+                link: "/about-snec",
               },
               {
                 id: "About_The_Founder",
                 name: "About The Founder",
-                link: "/",
+                link: "/about-the-founder",
               },
               {
                 id: "About_The_DIRECTOR",
                 name: "About The Director",
-                link: "/",
+                link: "/about-the-director",
               },
               {
                 id: "Gallery",
@@ -214,20 +212,17 @@ const NavSwitch = () => {
               {
                 id: "KYP",
                 name: "KYP",
-                link: "/",
-                // link: "/about-us",
+                link: "/govt-projects/kvp",
               },
               {
                 id: "PMKVY",
                 name: "PMKVY",
-                link: "/",
-                // link: "/pandit-ganesh-shankar-mishra",
+                link: "/govt-projects/pmkvy",
               },
               {
                 id: "Skill_India",
                 name: "Skill India",
-                link: "/",
-                // link: "/pandit-ganesh-shankar-mishra",
+                link: "/govt-projects/skill-india",
               },
             ]}
           />
@@ -241,42 +236,42 @@ const NavSwitch = () => {
               {
                 id: "department_of_paramedical",
                 name: "Department of Paramedical",
-                link: "/",
+                link: "/courses/paramedical",
               },
               {
                 id: "department_of_nursing",
                 name: "Department of Nursing",
-                link: "/",
+                link: "/courses/nursing",
               },
               {
                 id: "department_of_computer",
                 name: "Department of Computer",
-                link: "/",
+                link: "/courses/computer",
               },
               {
                 id: "department_of_education",
                 name: "Department of Education",
-                link: "/",
+                link: "/courses/education",
               },
               {
-                id: "department_of_vetenary",
-                name: "Department of Vetenary",
-                link: "/",
+                id: "department_of_veterinary",
+                name: "Department of Veterinary",
+                link: "/courses/veterinary",
               },
               {
                 id: "department_of_agriculture",
                 name: "Department of Agriculture",
-                link: "/",
+                link: "/courses/agriculture",
               },
               {
                 id: "department_of_yoga",
                 name: "Department of Yoga",
-                link: "/",
+                link: "/courses/yoga",
               },
               {
                 id: "University_courses",
                 name: "University Courses",
-                link: "/",
+                link: "/courses/university-courses",
               },
             ]}
           />
@@ -290,12 +285,12 @@ const NavSwitch = () => {
               {
                 id: "results",
                 name: "Results",
-                link: "/",
+                link: "/student-zone/results",
               },
               {
                 id: "Cert_Verification",
                 name: "Certificate Verification",
-                link: "/",
+                link: "/student-zone/certificate-verification",
               },
             ]}
           />
@@ -309,22 +304,22 @@ const NavSwitch = () => {
               {
                 id: "admit_card",
                 name: "Admit Card",
-                link: "/",
+                link: "/student-zone/examination/admit-card",
               },
               {
                 id: "Id_card",
                 name: "Id Card",
-                link: "/",
+                link: "/student-zone/examination/id-card",
               },
               {
                 id: "Exam_date",
                 name: "Exam Date",
-                link: "/",
+                link: "/student-zone/examination/exam-date",
               },
               {
                 id: "Online_exam",
                 name: "Online Exam",
-                link: "/",
+                link: "/student-zone/examination/online-exam",
               },
             ]}
           />
@@ -338,22 +333,22 @@ const NavSwitch = () => {
               {
                 id: "Authorized_study_centre",
                 name: "Authorized Study Centre",
-                link: "/",
+                link: "/centres/authorized-study-centre",
               },
               {
                 id: "Authorized_Franchise",
                 name: "Authorized Franchise",
-                link: "/",
+                link: "/centres/authorized-franchise",
               },
               {
                 id: "New_Franchise",
                 name: "New Franchise",
-                link: "/",
+                link: "/centres/new-franchise",
               },
               {
                 id: "enquiry",
                 name: "Franchise Enquiry",
-                link: "/",
+                link: "/centres/franchise-enquiry",
               },
             ]}
           />

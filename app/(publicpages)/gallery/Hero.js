@@ -1,4 +1,4 @@
-import { SITENAME } from "@/app/config";
+import { HERO_BACKGROUND_IMAGE, SITENAME } from "@/app/config";
 import Image from "next/image";
 import React from "react";
 
@@ -16,13 +16,7 @@ const Hero = () => {
           color: "#fff",
         }}
       >
-        <div
-          style={{
-            backgroundImage:
-              "linear-gradient(310deg, rgba(255, 165, 0, 0.8), rgba(255, 200, 0, 0.5))",
-          }}
-          className="py-5 "
-        >
+        <div style={HERO_BACKGROUND_IMAGE} className="py-5 ">
           <div className="container text-center">
             <div className="row align-items-center">
               <div className="col-md-4 text-md-left text-center mb-4 mb-md-0">
@@ -38,7 +32,7 @@ const Hero = () => {
               <div className="col-md-8">
                 <h1
                   className={
-                    "bebas-neue-regular hero-text-5 font-weight-bold p-0 m-0"
+                    "bebas-neue-regular text-white text-white hero-text-5 font-weight-bold p-0 m-0"
                   }
                 >
                   {SITENAME}
