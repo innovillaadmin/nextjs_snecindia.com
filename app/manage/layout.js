@@ -5,7 +5,7 @@ const ManageLayout = ({ children }) => {
   return (
     <AuthContainer>
       {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
-      {children}
+      <div className="mh-90">{children}</div>
     </AuthContainer>
   );
 };

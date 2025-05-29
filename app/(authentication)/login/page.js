@@ -27,9 +27,7 @@ const Login = () => {
     if (userRole) {
       var redirectPath = "";
       if (userRole === "admin") {
-        redirectPath = "/manage/room-config";
-      } else if (userRole === "customer") {
-        redirectPath = "/manage/user-order-history";
+        redirectPath = "/manage/dashboard";
       } else {
         redirectPath = "/";
       }

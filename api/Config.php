@@ -38,7 +38,8 @@ class Config
     public function connection()
     {
         // $connect = new mysqli('localhost:3307', 'root', '', 'abscorp');
-        $connect = new mysqli('localhost', 'innovz4y_mpandey', 'Mrityunj@y2290', 'innovz4y_mgs_guest_house');
+        $connect = new mysqli('sdb-s.hosting.stackcp.net', 'mpandey', 'Mrityunj@y2290', 'snecindia_com_v2-323037abec');
+        $connect->set_charset("utf8mb4");
         $connect->query("SET time_zone = '+05:30'");
         return $connect;
     }
