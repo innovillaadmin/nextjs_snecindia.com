@@ -1,8 +1,23 @@
+"use client";
 import FooterPublic from "@/app/component/FooterPublic";
 import Partition from "@/app/component/Partition";
-import React from "react";
+import { API_PATH } from "@/app/config";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const [fl, setfl] = useState([]);
+  useEffect(() => {
+    axios
+      .post(API_PATH + "PublicRequests.php", {
+        action: "getNewFranchiseList",
+      })
+      .then((r) => {
+        if (r.data.status === "success") {
+          setfl(r.data.retval);
+        }
+      });
+  }, []);
   return (
     <div>
       <Partition />
@@ -10,7 +25,7 @@ const page = () => {
         {/* Header Section */}
         <div className="row mb-4">
           <div className="col text-center">
-            <h1 className="display-5 fw-bold">New Franchises</h1>
+            <h1 className="display-5 fw-bold">New Franchise List</h1>
             <p className="lead text-muted">
               Below is the list of newly registered and upcoming SSNEC franchise
               centres across India.
@@ -30,50 +45,26 @@ const page = () => {
                         <th>#</th>
                         <th>Franchise Name</th>
                         <th>Location</th>
-                        <th>Coordinator</th>
+                        {/* <th>Coordinator</th> */}
                         <th>Contact</th>
                         <th>Email</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Future Skills Academy</td>
-                        <td>Indore, Madhya Pradesh</td>
-                        <td>Mr. Ajay Mehta</td>
-                        <td>+91 9090909090</td>
-                        <td>futureskills@ssnec.org</td>
-                        <td>
-                          <span className="badge bg-warning text-dark">
-                            Pending Verification
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Smart Learning Hub</td>
-                        <td>Jaipur, Rajasthan</td>
-                        <td>Ms. Sunita Sharma</td>
-                        <td>+91 9123456789</td>
-                        <td>smartlearning@ssnec.org</td>
-                        <td>
-                          <span className="badge bg-success">Approved</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Career Builders Institute</td>
-                        <td>Guwahati, Assam</td>
-                        <td>Mr. Nikhil Das</td>
-                        <td>+91 9876543211</td>
-                        <td>careerbuilders@ssnec.org</td>
-                        <td>
-                          <span className="badge bg-info text-dark">
-                            Under Review
-                          </span>
-                        </td>
-                      </tr>
+                      {fl &&
+                        fl.map((d, i) => {
+                          return (
+                            <tr key={i}>
+                              <td>{i + 1}</td>
+                              <td>{d.fname}</td>
+                              <td>{d.address}</td>
+                              <td>{d.contact}</td>
+                              <td>{d.email}</td>
+                              <td>{d.status}</td>
+                            </tr>
+                          );
+                        })}
                       {/* Additional entries can be dynamically rendered */}
                     </tbody>
                   </table>

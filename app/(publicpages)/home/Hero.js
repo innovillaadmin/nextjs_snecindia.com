@@ -39,7 +39,7 @@ const Hero = () => {
                   S. S. N. E. C.
                 </h2>
                 <h3 className=" bebas-neue-regular p-0 m-0  hero-text-4 mt-2">
-                  SS National
+                  S.S. National
                 </h3>
                 <h3 className=" bebas-neue-regular p-0 m-0  hero-text-4 mt-2">
                   Educational Council

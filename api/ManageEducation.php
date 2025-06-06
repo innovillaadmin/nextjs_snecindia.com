@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $orderby = $data->orderby ?? 'id desc';
 
             // Validate table name — only allow specific safe tables
-            $allowedTables = ['departments', 'courses', 'subjects', 'franchises'];
+            $allowedTables = ['departments', 'courses', 'subjects', 'franchises', 'userdata'];
             if (!in_array($table, $allowedTables)) {
                 echo json_encode([
                     'status' => 'error',
@@ -167,6 +167,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         '$coursename', '$departmentname', '$subjectname', 
                         '$userid', '$username', CURRENT_DATE(), 
                         CURRENT_TIME())";
+
+            $result = $conn->query($query);
+            if ($result && !$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => $conn->error
+                ]);
+            }
+        }
+        if ($data->action == 'addFranchise') {
+            $name = $act->sanitize($data->name);
+            $email = $act->sanitize($data->email);
+            $contact = $act->sanitize($data->contact);
+            $address = $act->sanitize($data->address);
+            $city = $act->sanitize($data->city);
+            $state = $act->sanitize($data->state);
+            $pincode = $act->sanitize($data->pincode);
+            $status = $act->sanitize($data->status);
+            $password = $act->sanitize($data->password);
+
+            $query = "INSERT INTO `userdata`(
+                        `status`, `fname`, `contact`, 
+                        `email`, `address`, `password`, 
+                        `userrole`, `approved_by_id`, `approved_by_name`, 
+                        `date_of_approval`, `date_added`, 
+                        `time_added`, `date_modified`, `time_modified`, 
+                        `added_by_id`, `added_by_name`) VALUES (
+                        '$status', '$name', '$contact',
+                        '$email', '$address.' '.$city.' '.$state.' '.$pincode', '$password', 
+                        'franchise', '$userid', '$username', 
+                        CURRENT_DATE(), CURRENT_DATE(), 
+                        CURRENT_TIME(), CURRENT_DATE(), 
+                        CURRENT_TIME(), '$userid', '$username')";
+
+            $result = $conn->query($query);
+            if ($result && !$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => $conn->error
+                ]);
+            }
+        }
+        if ($data->action == 'addStudyCenter') {
+            $name = $act->sanitize($data->name);
+            $email = $act->sanitize($data->email);
+            $contact = $act->sanitize($data->contact);
+            $address = $act->sanitize($data->address);
+            $city = $act->sanitize($data->city);
+            $state = $act->sanitize($data->state);
+            $pincode = $act->sanitize($data->pincode);
+            $status = $act->sanitize($data->status);
+            $password = $act->sanitize($data->password);
+
+            $query = "INSERT INTO `userdata`(
+                        `status`, `fname`, `contact`, 
+                        `email`, `address`, `password`, 
+                        `userrole`, `approved_by_id`, `approved_by_name`, 
+                        `date_of_approval`, `date_added`, 
+                        `time_added`, `date_modified`, `time_modified`, 
+                        `added_by_id`, `added_by_name`) VALUES (
+                        '$status', '$name', '$contact',
+                        '$email', '$address.' '.$city.' '.$state.' '.$pincode', '$password', 
+                        'study-centre', '$userid', '$username', 
+                        CURRENT_DATE(), CURRENT_DATE(), 
+                        CURRENT_TIME(), CURRENT_DATE(), 
+                        CURRENT_TIME(), '$userid', '$username')";
 
             $result = $conn->query($query);
             if ($result && !$conn->error) {

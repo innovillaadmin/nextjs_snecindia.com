@@ -71,7 +71,7 @@ export default function Courses() {
           </label>
           <select
             id="department"
-            className="form-select"
+            className="form-select bg-light"
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
             required
@@ -92,7 +92,7 @@ export default function Courses() {
           <input
             type="text"
             id="courseName"
-            className="form-control"
+            className="form-control bg-light"
             value={courseName}
             onChange={(e) => setCourseName(e.target.value)}
             required
@@ -105,7 +105,7 @@ export default function Courses() {
           <input
             type="text"
             id="courseCode"
-            className="form-control"
+            className="form-control bg-light"
             value={courseCode}
             onChange={(e) => setCourseCode(e.target.value)}
             required
@@ -117,7 +117,7 @@ export default function Courses() {
           </label>
           <select
             id="department"
-            className="form-select"
+            className="form-select bg-light"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             required
@@ -143,7 +143,7 @@ export default function Courses() {
           </label>
           <select
             id="department"
-            className="form-select"
+            className="form-select bg-light"
             value={eligibility}
             onChange={(e) => setEligibility(e.target.value)}
             required

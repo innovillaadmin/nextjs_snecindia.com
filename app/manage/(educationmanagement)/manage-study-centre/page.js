@@ -29,7 +29,7 @@ export default function ManageFranchise() {
   useEffect(() => {
     fetchTableData({
       table: "userdata",
-      where: "userrole='franchise'",
+      where: "userrole='study-centre'",
       orderby: "id desc",
       limit: "100",
     }).then((r) => setFranchises(r));
@@ -46,7 +46,7 @@ export default function ManageFranchise() {
 
     axios
       .post(API_PATH + "ManageEducation.php", {
-        action: "addFranchise",
+        action: "addStudyCenter",
         userid: localStorage.getItem(LS_USERID),
         usertoken: localStorage.getItem(LS_USERTOKEN),
         username: localStorage.getItem(LS_USERNAME),
@@ -86,7 +86,7 @@ export default function ManageFranchise() {
 
   return (
     <div className="container my-5">
-      <h3 className="mb-4">Manage Franchise</h3>
+      <h3 className="mb-4">Manage Study Centre</h3>
 
       <form className="row g-3 mb-4" onSubmit={handleSubmit}>
         <div className="col-md-3">

@@ -3,12 +3,14 @@ import NavLi from "./NavLi";
 import style from "./header.module.css";
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
-import { LS_USERROLE } from "@/app/config";
+import { useCallback, useEffect, useState } from "react";
+import { API_PATH, LS_USERROLE } from "@/app/config";
 import { usePathname } from "next/navigation";
+import axios from "axios";
 
 const NavSwitch = () => {
   const [userrole, setuserrole] = useState("");
+  const [departments, setDepartments] = useState([]);
   const pathname = usePathname();
 
   const [openIndex, setOpenIndex] = useState(null);
@@ -20,6 +22,28 @@ const NavSwitch = () => {
   useEffect(() => {
     setuserrole(localStorage.getItem(LS_USERROLE));
   }, [pathname]);
+
+  const fetchDepartments = useCallback(async () => {
+    try {
+      const response = await axios.post(API_PATH + "PublicRequests.php", {
+        action: "fetchDepartments",
+      });
+      const formatted = response.data.retval.map((item) => ({
+        id: item.id,
+        name: item.name,
+        link: `/courses/${item.id}`, // dynamically generate the link
+      }));
+      setDepartments(formatted);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+
+      return [];
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchDepartments();
+  }, [fetchDepartments]);
 
   switch (userrole) {
     case "admin":
@@ -54,6 +78,11 @@ const NavSwitch = () => {
                 id: "Franchise",
                 name: "Franchise",
                 link: "/manage/manage-franchise",
+              },
+              {
+                id: "FranchiseStudyCentre",
+                name: "Study Centre",
+                link: "/manage/manage-study-centre",
               },
             ]}
           />
@@ -337,48 +366,7 @@ const NavSwitch = () => {
             index={1} // Ensure index is defined
             isOpen={openIndex === 1}
             onToggle={() => handleToggle(1)}
-            navlinks={[
-              {
-                id: "department_of_paramedical",
-                name: "Department of Paramedical",
-                link: "/courses/paramedical",
-              },
-              {
-                id: "department_of_nursing",
-                name: "Department of Nursing",
-                link: "/courses/nursing",
-              },
-              {
-                id: "department_of_computer",
-                name: "Department of Computer",
-                link: "/courses/computer",
-              },
-              {
-                id: "department_of_education",
-                name: "Department of Education",
-                link: "/courses/education",
-              },
-              {
-                id: "department_of_veterinary",
-                name: "Department of Veterinary",
-                link: "/courses/veterinary",
-              },
-              {
-                id: "department_of_agriculture",
-                name: "Department of Agriculture",
-                link: "/courses/agriculture",
-              },
-              {
-                id: "department_of_yoga",
-                name: "Department of Yoga",
-                link: "/courses/yoga",
-              },
-              {
-                id: "University_courses",
-                name: "University Courses",
-                link: "/courses/university-courses",
-              },
-            ]}
+            navlinks={departments ?? []}
           />
           <NavLi
             title={"Student Zone ▾"}
