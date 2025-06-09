@@ -1,6 +1,6 @@
 "use client";
 import { API_PATH, LS_USERID, LS_USERNAME, LS_USERTOKEN } from "@/app/config";
-import { fetchDepartments } from "@/app/reusable";
+import { fetchTableData } from "@/app/reusable";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,12 @@ export default function AddDepartment() {
   const [deptCode, setDeptCode] = useState("");
 
   useEffect(() => {
-    fetchDepartments().then((r) => setDepartments(r));
+    fetchTableData({
+      table: "departments",
+      where: "id>0",
+      orderby: "id desc",
+      limit: "100",
+    }).then((r) => setDepartments(r));
   }, []);
 
   const handleSubmit = (e) => {
