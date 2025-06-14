@@ -18,9 +18,9 @@ const About = () => {
         <div className="row mb-5">
           <div className="col-md-6">
             <img
-              src="https://via.placeholder.com/600x400"
+              src="/assets/img/about.png"
               alt="SS National Educational Council"
-              className="img-fluid rounded shadow-sm"
+              className="img-fluid"
             />
           </div>
           <div className="col-md-6">
@@ -37,6 +37,16 @@ const About = () => {
               practical and industry-relevant curriculum. With experienced
               faculty and modern facilities, we ensure every student receives
               the knowledge and confidence they need to succeed.
+            </p>
+            <p>
+              At SS National Educational Council, we believe in empowering
+              students beyond the classroom. Our programs emphasize hands-on
+              experience, internships, and real-world projects that bridge the
+              gap between academic learning and professional application. We are
+              committed to continuous improvement and staying aligned with
+              evolving industry trends, ensuring our graduates are not only
+              job-ready but also equipped to lead and innovate in their chosen
+              fields.
             </p>
           </div>
         </div>

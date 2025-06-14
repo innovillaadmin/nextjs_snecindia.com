@@ -2,10 +2,10 @@ export const SITENAME = "SSNEC";
 export const SITE_DESCRIPTION =
   "Welcome to S.S National Educational Council, a trusted institution dedicated to promoting quality education, skill development, and lifelong learning. We aim to empower students and professionals through innovative programs that contribute to personal growth and national progress.";
 export const TITLE_TAGLINE = "Empowering Minds, Enriching Futures.";
-export const CONTACT_NUMBER = "########";
+export const CONTACT_NUMBER = "9471254191";
 export const CONTACT_ADDRESS = "Buxar, Bihar, India";
-export const CONTACT_EMAIL = "snecindia@gmail.com";
-export const WHATSAPP_NUMBER = "#########";
+export const CONTACT_EMAIL = "snecbxr@gmail.com";
+export const WHATSAPP_NUMBER = "9471254191";
 
 // server env
 export const API_SSR = "https://api.sellio.in/snecindia.com/api/";

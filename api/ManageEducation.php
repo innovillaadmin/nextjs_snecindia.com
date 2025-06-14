@@ -154,17 +154,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($data->action == 'addSubject') {
             $deptid = $act->sanitize($data->selectedDepartment);
             $courseid = $act->sanitize($data->selectedCourse);
+            $semester = $act->sanitize($data->semester);
             $subjectname = $act->sanitize($data->subjectName);
             $departmentname = $conn->query("select name from departments where id='$deptid'")->fetch_object()->name ?? '';
             $coursename = $conn->query("select name from courses where id='$courseid'")->fetch_object()->name ?? '';
 
             $query = "INSERT INTO `subjects`(
                         `course_id`, `department_id`, 
-                        `course_name`, `department_name`, `subject_name`, 
+                        `course_name`, `department_name`, 
+                        `part_or_semester`, `subject_name`, 
                         `added_by`, `added_by_name`, `date`, 
                         `time`) VALUES (
                         '$courseid', '$deptid', 
-                        '$coursename', '$departmentname', '$subjectname', 
+                        '$coursename', '$departmentname',
+                        '$semester', '$subjectname', 
                         '$userid', '$username', CURRENT_DATE(), 
                         CURRENT_TIME())";
 
@@ -246,6 +249,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result && !$conn->error) {
                 echo json_encode([
                     'status' => 'success',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => $conn->error
+                ]);
+            }
+        }
+        if ($data->action == 'addAdmission') {
+            $userid = $act->sanitize($data->userid);
+            $username = $act->sanitize($data->username);
+
+            // userdata table
+            $fname = $act->sanitize($data->fname);
+            $mname = $act->sanitize($data->mname);
+            $lname = $act->sanitize($data->lname);
+            $gender = $act->sanitize($data->gender);
+            $contact_number = $act->sanitize($data->contact_number);
+            $password = md5($contact_number);
+            $email_address = $act->sanitize($data->email_address);
+            $address = $act->sanitize($data->address); // required field
+            $dob = $act->sanitize($data->dob);
+            $whatsapp_number = $act->sanitize($data->whatsapp_number);
+            $alternate_number = $act->sanitize($data->alternate_number);
+            $photograph = $act->sanitize($data->photograph);
+            $academic_year = $act->sanitize($data->academic_year);
+
+            $admission_date = $act->sanitize($data->admission_date);
+            $previous_qualification = $act->sanitize($data->previous_qualification);
+            $previous_institute = $act->sanitize($data->previous_institute);
+            $previous_board_university = $act->sanitize($data->previous_board_university);
+            $year_of_passing = $act->sanitize($data->year_of_passing);
+            $marks_obtained = $act->sanitize($data->marks_obtained);
+            $grade_or_percentage = $act->sanitize($data->grade_or_percentage);
+            $caste_category = $act->sanitize($data->caste_category);
+            $nationality = $act->sanitize($data->nationality);
+            $religion = $act->sanitize($data->religion);
+            $blood_group = $act->sanitize($data->blood_group);
+            $father_name = $act->sanitize($data->father_name);
+            $mother_name = $act->sanitize($data->mother_name);
+            $guardian_contact = $act->sanitize($data->guardian_contact);
+
+
+            $mode_of_admission = 'direct';
+
+
+            $createuser = "INSERT INTO `userdata`(
+                                `status`, `fname`, `mname`, `lname`, 
+                                `gender`, `contact`, `email`, `address`, 
+                                `password`, `userrole`, `dob`, `whatsapp_number`, 
+                                `alternate_number`, `photograph`, `enrollment_date`, 
+                                `academic_year`, `admission_status`, `mode_of_admission`, 
+                                `admission_date`, `previous_qualification`, `previous_institute`, 
+                                `previous_board_university`, `year_of_passing`, `marks_obtained`, 
+                                `grade_or_percentage`, `caste_category`, `nationality`, 
+                                `religion`, `blood_group`, `father_name`, `mother_name`, 
+                                `guardian_contact`, `approved_by_id`, `approved_by_name`, 
+                                `date_of_approval`, `date_added`, `time_added`, `date_modified`, 
+                                `time_modified`, `added_by_id`, `added_by_name`
+                            ) VALUES (
+                                'active', '$fname', '$mname', '$lname',
+                                '$gender', '$contact_number', '$email_address', '$address',
+                                '$password', 'student', '$dob', '$whatsapp_number',
+                                '$alternate_number', '', $admission_date,
+                                '$academic_year', 'admitted', '$mode_of_admission',
+                                '$admission_date', '$previous_qualification', '$previous_institute',
+                                '$previous_board_university', '$year_of_passing', '$marks_obtained',
+                                '$grade_or_percentage', '$caste_category', '$nationality',
+                                '$religion', '$blood_group', '$father_name', '$mother_name',
+                                '$guardian_contact', '$userid', '$username', 
+                                CURRENT_DATE(), CURRENT_DATE(), CURRENT_TIME(), CURRENT_DATE(), 
+                                CURRENT_TIME(), '$userid', '$username'
+                            )";
+
+            $usercreation = $conn->query($createuser);
+
+            if ($usercreation && !$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => $conn->error
+                ]);
+            }
+        }
+        if ($data->action == 'fetchAdmissions') {
+
+
+            $retval = $conn->query("Select * from userdata 
+                                            where userrole='student' 
+                                            order by id desc 
+                                            limit 100")->fetch_all(MYSQLI_ASSOC);
+
+            if ($retval && !$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
                 ]);
             } else {
                 echo json_encode([

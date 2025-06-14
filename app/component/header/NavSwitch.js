@@ -53,7 +53,7 @@ const NavSwitch = () => {
             <Link href={"/"}>Home</Link>
           </li>
           <NavLi
-            title="Manage Education ▾"
+            title="Education ▾"
             icon={""}
             index={1} // Ensure index is defined
             isOpen={openIndex === 1}
@@ -83,6 +83,25 @@ const NavSwitch = () => {
                 id: "FranchiseStudyCentre",
                 name: "Study Centre",
                 link: "/manage/manage-study-centre",
+              },
+            ]}
+          />
+          <NavLi
+            title="Admissions ▾"
+            icon={""}
+            index={1} // Ensure index is defined
+            isOpen={openIndex === 1}
+            onToggle={() => handleToggle(1)}
+            navlinks={[
+              {
+                id: "Students",
+                name: "Students",
+                link: "/manage/manage-students",
+              },
+              {
+                id: "CourseEnrollment",
+                name: "Course Enrollment",
+                link: "/manage/manage-course-enrollment",
               },
             ]}
           />

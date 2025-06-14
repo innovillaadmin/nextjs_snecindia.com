@@ -12,6 +12,7 @@ export default function AddSubjects() {
   const [coursesByDepartment, setCourseByDepartment] = useState([]);
 
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [semester, setsemester] = useState("");
   const [subjectName, setSubjectName] = useState("");
 
   const [subjects, setSubjects] = useState([]);
@@ -54,6 +55,7 @@ export default function AddSubjects() {
         username: localStorage.getItem(LS_USERNAME),
         selectedDepartment,
         selectedCourse,
+        semester,
         subjectName,
       })
       .then((r) => {
@@ -118,6 +120,28 @@ export default function AddSubjects() {
                   {d.name}
                 </option>
               ))}
+          </select>
+        </div>
+        <div className="col-md-4">
+          <label htmlFor="course" className="form-label">
+            Select Phase/Semester
+          </label>
+          <select
+            id="semester"
+            className="form-select bg-light"
+            value={semester}
+            onChange={(e) => setsemester(e.target.value)}
+            required
+          >
+            <option value="">-- Choose --</option>
+            <option value="part_sem_1">Part/Semester 1</option>
+            <option value="part_sem_2">Part/Semester 2</option>
+            <option value="part_sem_3">Part/Semester 3</option>
+            <option value="part_sem_4">Part/Semester 4</option>
+            <option value="part_sem_5">Part/Semester 5</option>
+            <option value="part_sem_6">Part/Semester 6</option>
+            <option value="part_sem_7">Part/Semester 7</option>
+            <option value="part_sem_8">Part/Semester 8</option>
           </select>
         </div>
 

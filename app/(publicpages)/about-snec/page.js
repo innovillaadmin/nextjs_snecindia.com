@@ -19,7 +19,7 @@ const page = () => {
         </div>
 
         <div className="row mb-5">
-          <div className="col-md-6">
+          <div className="col-md-7">
             <h2 className="h4 fw-semibold">Our Vision</h2>
             <p>
               To be a leading educational council delivering skill-based,
@@ -44,12 +44,22 @@ const page = () => {
                 training.
               </li>
             </ul>
+            <h2 className="h4 fw-semibold">Our Commitment</h2>
+            <p>
+              We are dedicated to creating inclusive learning opportunities that
+              cater to diverse backgrounds and learning needs. By collaborating
+              with industry partners, government bodies, and community
+              organizations, we aim to ensure our programs remain relevant,
+              impactful, and scalable. Through continuous innovation and quality
+              assurance, we strive to build a skilled workforce that contributes
+              meaningfully to society and drives sustainable national growth.
+            </p>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-5">
             <img
-              src="https://via.placeholder.com/600x400"
+              src="/assets/img/sslogo.png"
               alt="SSNEC Vision"
-              className="img-fluid rounded shadow-sm"
+              className="img-fluid"
             />
           </div>
         </div>

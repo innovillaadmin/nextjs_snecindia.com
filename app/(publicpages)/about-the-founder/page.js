@@ -20,24 +20,24 @@ const page = () => {
         <div className="row align-items-center mb-5">
           <div className="col-md-4 text-center mb-4 mb-md-0">
             <img
-              src="https://via.placeholder.com/300x300"
+              src="/assets/img/founder.jpeg"
               alt="Founder Photo"
               className="img-fluid rounded-circle shadow-sm"
             />
           </div>
           <div className="col-md-8">
-            <h2 className="h4 fw-semibold">[Founder’s Name]</h2>
+            <h2 className="h4 fw-semibold">Mr. Ashwini</h2>
             <p>
-              [Founder’s Name], the founder of SS National Educational Council,
-              is a dedicated educationist and social reformer committed to
-              empowering youth through quality vocational training. With a
-              vision to bridge the skills gap in India, [he/she/they] laid the
-              foundation of SSNEC to offer job-ready education in fields like
-              computer science, healthcare, and veterinary science.
+              Mr. Ashwini, the founder of SS National Educational Council, is a
+              dedicated educationist and social reformer committed to empowering
+              youth through quality vocational training. With a vision to bridge
+              the skills gap in India,he laid the foundation of SSNEC to offer
+              job-ready education in fields like computer science, healthcare,
+              and veterinary science.
             </p>
             <p>
-              With over [X] years of experience in the education sector,
-              [Founder’s Name] has helped thousands of students gain meaningful
+              With over 15 years of experience in the education sector, Mr.
+              Ashwini has helped thousands of students gain meaningful
               employment and independence through skill-based learning.
             </p>
           </div>
@@ -53,9 +53,7 @@ const page = () => {
                 the world. At SSNEC, we are not just teaching — we are
                 transforming lives."
               </p>
-              <footer className="blockquote-footer mt-2">
-                [Founder’s Name]
-              </footer>
+              <footer className="blockquote-footer mt-2">Mr. Ashwini</footer>
             </blockquote>
           </div>
         </div>
