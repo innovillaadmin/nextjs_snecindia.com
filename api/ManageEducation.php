@@ -2,7 +2,6 @@
 require 'Config.php';
 class ManageEducation extends Config
 {
-
     public function getuserdata($userid)
     {
         global $conn;
@@ -257,85 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
         }
-        if ($data->action == 'addAdmission') {
-            $userid = $act->sanitize($data->userid);
-            $username = $act->sanitize($data->username);
 
-            // userdata table
-            $fname = $act->sanitize($data->fname);
-            $mname = $act->sanitize($data->mname);
-            $lname = $act->sanitize($data->lname);
-            $gender = $act->sanitize($data->gender);
-            $contact_number = $act->sanitize($data->contact_number);
-            $password = md5($contact_number);
-            $email_address = $act->sanitize($data->email_address);
-            $address = $act->sanitize($data->address); // required field
-            $dob = $act->sanitize($data->dob);
-            $whatsapp_number = $act->sanitize($data->whatsapp_number);
-            $alternate_number = $act->sanitize($data->alternate_number);
-            $photograph = $act->sanitize($data->photograph);
-            $academic_year = $act->sanitize($data->academic_year);
-
-            $admission_date = $act->sanitize($data->admission_date);
-            $previous_qualification = $act->sanitize($data->previous_qualification);
-            $previous_institute = $act->sanitize($data->previous_institute);
-            $previous_board_university = $act->sanitize($data->previous_board_university);
-            $year_of_passing = $act->sanitize($data->year_of_passing);
-            $marks_obtained = $act->sanitize($data->marks_obtained);
-            $grade_or_percentage = $act->sanitize($data->grade_or_percentage);
-            $caste_category = $act->sanitize($data->caste_category);
-            $nationality = $act->sanitize($data->nationality);
-            $religion = $act->sanitize($data->religion);
-            $blood_group = $act->sanitize($data->blood_group);
-            $father_name = $act->sanitize($data->father_name);
-            $mother_name = $act->sanitize($data->mother_name);
-            $guardian_contact = $act->sanitize($data->guardian_contact);
-
-
-            $mode_of_admission = 'direct';
-
-
-            $createuser = "INSERT INTO `userdata`(
-                                `status`, `fname`, `mname`, `lname`, 
-                                `gender`, `contact`, `email`, `address`, 
-                                `password`, `userrole`, `dob`, `whatsapp_number`, 
-                                `alternate_number`, `photograph`, `enrollment_date`, 
-                                `academic_year`, `admission_status`, `mode_of_admission`, 
-                                `admission_date`, `previous_qualification`, `previous_institute`, 
-                                `previous_board_university`, `year_of_passing`, `marks_obtained`, 
-                                `grade_or_percentage`, `caste_category`, `nationality`, 
-                                `religion`, `blood_group`, `father_name`, `mother_name`, 
-                                `guardian_contact`, `approved_by_id`, `approved_by_name`, 
-                                `date_of_approval`, `date_added`, `time_added`, `date_modified`, 
-                                `time_modified`, `added_by_id`, `added_by_name`
-                            ) VALUES (
-                                'active', '$fname', '$mname', '$lname',
-                                '$gender', '$contact_number', '$email_address', '$address',
-                                '$password', 'student', '$dob', '$whatsapp_number',
-                                '$alternate_number', '', $admission_date,
-                                '$academic_year', 'admitted', '$mode_of_admission',
-                                '$admission_date', '$previous_qualification', '$previous_institute',
-                                '$previous_board_university', '$year_of_passing', '$marks_obtained',
-                                '$grade_or_percentage', '$caste_category', '$nationality',
-                                '$religion', '$blood_group', '$father_name', '$mother_name',
-                                '$guardian_contact', '$userid', '$username', 
-                                CURRENT_DATE(), CURRENT_DATE(), CURRENT_TIME(), CURRENT_DATE(), 
-                                CURRENT_TIME(), '$userid', '$username'
-                            )";
-
-            $usercreation = $conn->query($createuser);
-
-            if ($usercreation && !$conn->error) {
-                echo json_encode([
-                    'status' => 'success',
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => $conn->error
-                ]);
-            }
-        }
         if ($data->action == 'fetchAdmissions') {
 
 
@@ -357,5 +278,132 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+    }
+
+    if (isset($_POST['action']) && $act->isUserValid($_POST['usertoken'])) {
+        if ($_POST['action'] == 'addAdmission') {
+            $data = (object) $_POST;
+            $userid = $act->sanitize($data->userid);
+            $username = $act->sanitize($data->username);
+            $photograph = $act->uploadImage('photograph', 'assets/img/student/', 'student_');
+            $rollnumber = $act->sanitize($data->rollnumber);
+            $fname = $act->sanitize($data->fname);
+            $mname = $act->sanitize($data->mname);
+            $lname = $act->sanitize($data->lname);
+            $mother_name = $act->sanitize($data->mother_name);
+            $father_name = $act->sanitize($data->father_name);
+            $dob = $act->sanitize($data->dob);
+            $gender = $act->sanitize($data->gender);
+            $caste_category = $act->sanitize($data->caste_category);
+            $uid_number = $act->sanitize($data->uid_number);
+            $nationality = $act->sanitize($data->nationality);
+            $corresponding_address = $act->sanitize($data->corresponding_address);
+            $corresponding_city = $act->sanitize($data->corresponding_city);
+            $corresponding_state = $act->sanitize($data->corresponding_state);
+            $corresponding_pincode = $act->sanitize($data->corresponding_pincode);
+            $permanent_address = $act->sanitize($data->permanent_address);
+            $permanent_city = $act->sanitize($data->permanent_city);
+            $permanent_state = $act->sanitize($data->permanent_state);
+            $permanent_pincode = $act->sanitize($data->permanent_pincode);
+            $contact_number_father = $act->sanitize($data->contact_number_father);
+            $contact_number_mother = $act->sanitize($data->contact_number_mother);
+            $contact_number = $act->sanitize($data->contact_number);
+            $password = md5($contact_number);
+            $alternate_number = $act->sanitize($data->alternate_number);
+            $email_address = $act->sanitize($data->email_address);
+            $whatsapp_number = $act->sanitize($data->whatsapp_number);
+
+            $highschool_school_name = $act->sanitize($data->highschool_school_name);
+            $highschool_board_university = $act->sanitize($data->highschool_board_university);
+            $highschool_year_of_passing = $act->sanitize($data->highschool_year_of_passing);
+            $highschool_stream = $act->sanitize($data->highschool_stream);
+            $highschool_marks_obtained = $act->sanitize($data->highschool_marks_obtained);
+            $highschool_marks_in_pertentage = $act->sanitize($data->highschool_marks_in_pertentage);
+            $intermediate_school_name = $act->sanitize($data->intermediate_school_name);
+            $intermediate_board_university = $act->sanitize($data->intermediate_board_university);
+            $intermediate_year_of_passing = $act->sanitize($data->intermediate_year_of_passing);
+            $intermediate_stream = $act->sanitize($data->intermediate_stream);
+            $intermediate_marks_obtained = $act->sanitize($data->intermediate_marks_obtained);
+            $intermediate_marks_in_pertentage = $act->sanitize($data->intermediate_marks_in_pertentage);
+            $diploma_school_name = $act->sanitize($data->diploma_school_name);
+            $diploma_board_university = $act->sanitize($data->diploma_board_university);
+            $diploma_year_of_passing = $act->sanitize($data->diploma_year_of_passing);
+            $diploma_stream = $act->sanitize($data->diploma_stream);
+            $diploma_marks_obtained = $act->sanitize($data->diploma_marks_obtained);
+            $diploma_marks_in_pertentage = $act->sanitize($data->diploma_marks_in_pertentage);
+            $graduation_school_name = $act->sanitize($data->graduation_school_name);
+            $graduation_board_university = $act->sanitize($data->graduation_board_university);
+            $graduation_year_of_passing = $act->sanitize($data->graduation_year_of_passing);
+            $graduation_stream = $act->sanitize($data->graduation_stream);
+            $graduation_marks_obtained = $act->sanitize($data->graduation_marks_obtained);
+            $graduation_marks_in_pertentage = $act->sanitize($data->graduation_marks_in_pertentage);
+            $others_school_name = $act->sanitize($data->others_school_name);
+            $others_board_university = $act->sanitize($data->others_board_university);
+            $others_year_of_passing = $act->sanitize($data->others_year_of_passing);
+            $others_stream = $act->sanitize($data->others_stream);
+            $others_marks_obtained = $act->sanitize($data->others_marks_obtained);
+            $others_marks_in_pertentage = $act->sanitize($data->others_marks_in_pertentage);
+
+
+            $createuser = " INSERT INTO `userdata`(
+                            `status`, `rollnumber`, `fname`, 
+                            `mname`, `lname`, `mother_name`, 
+                            `father_name`, `dob`, `gender`, 
+                            `caste_category`, `uid_number`, `nationality`, 
+                            `religion`, `corresponding_address`, `corresponding_city`, 
+                            `corresponding_state`, `corresponding_pincode`, `permanent_address`, 
+                            `permanent_city`, `permanent_state`, `permanent_pincode`, 
+                            `contact_number_father`, `contact_number_mother`, `contact`, 
+                            `email`, `password`, `userrole`, 
+                            `whatsapp_number`, `alternate_number`, `photograph`, 
+                            `highschool_school_name`, `highschool_board_university`, `highschool_year_of_passing`, 
+                            `highschool_stream`, `highschool_marks_obtained`, `highschool_marks_in_pertentage`, 
+                            `intermediate_school_name`, `intermediate_board_university`, `intermediate_year_of_passing`, 
+                            `intermediate_stream`, `intermediate_marks_obtained`, `intermediate_marks_in_pertentage`, 
+                            `diploma_school_name`, `diploma_board_university`, `diploma_year_of_passing`, 
+                            `diploma_stream`, `diploma_marks_obtained`, `diploma_marks_in_pertentage`, 
+                            `graduation_school_name`, `graduation_board_university`, `graduation_year_of_passing`, 
+                            `graduation_stream`, `graduation_marks_obtained`, `graduation_marks_in_pertentage`, 
+                            `others_school_name`, `others_board_university`, `others_year_of_passing`, 
+                            `others_stream`, `others_marks_obtained`, `others_marks_in_pertentage`, 
+                            `date_added`, `time_added`, `date_modified`, 
+                            `time_modified`, `added_by_id`, `added_by_name`) VALUES (
+                            'active', '$rollnumber', '$fname', 
+                            '$mname', '$lname', '$mother_name', 
+                            '$father_name', '$dob', '$gender', 
+                            '$caste_category', '$uid_number', '$nationality', 
+                            '', '$corresponding_address', '$corresponding_city', 
+                            '$corresponding_state', '$corresponding_pincode', '$permanent_address', 
+                            '$permanent_city', '$permanent_state', '$permanent_pincode', 
+                            '$contact_number_father', '$contact_number_mother', '$contact_number', 
+                            '$email_address', '$password', 'student', 
+                            '$whatsapp_number', '$alternate_number', '$photograph', 
+                            '$highschool_school_name', '$highschool_board_university', '$highschool_year_of_passing', 
+                            '$highschool_stream', '$highschool_marks_obtained', '$highschool_marks_in_pertentage', 
+                            '$intermediate_school_name', '$intermediate_board_university', '$intermediate_year_of_passing', 
+                            '$intermediate_stream', '$intermediate_marks_obtained', '$intermediate_marks_in_pertentage',
+                            '$diploma_school_name', '$diploma_board_university', '$diploma_year_of_passing', 
+                            '$diploma_stream', '$diploma_marks_obtained', '$diploma_marks_in_pertentage', 
+                            '$graduation_school_name', '$graduation_board_university', '$graduation_year_of_passing', 
+                            '$graduation_stream', '$graduation_marks_obtained', '$graduation_marks_in_pertentage', 
+                            '$others_school_name', '$others_board_university', '$others_year_of_passing', 
+                            '$others_stream', '$others_marks_obtained', '$others_marks_in_pertentage', 
+                            CURRENT_DATE(), CURRENT_TIME(), CURRENT_DATE(), 
+                            CURRENT_TIME(), '$userid', '$username') ";
+
+
+            $usercreation = $conn->query($createuser);
+
+            if ($usercreation && !$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => $conn->error
+                ]);
+            }
+        }
     }
 }
