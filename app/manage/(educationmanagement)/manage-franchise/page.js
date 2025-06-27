@@ -94,7 +94,7 @@ export default function ManageFranchise() {
           <input
             type="text"
             name="name"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.name}
             onChange={handleChange}
             required
@@ -105,7 +105,7 @@ export default function ManageFranchise() {
           <input
             type="email"
             name="email"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.email}
             onChange={handleChange}
             required
@@ -116,7 +116,7 @@ export default function ManageFranchise() {
           <input
             type="text"
             name="contact"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.contact}
             onChange={handleChange}
             required
@@ -127,7 +127,7 @@ export default function ManageFranchise() {
           <input
             type="text"
             name="address"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.address}
             onChange={handleChange}
             required
@@ -138,7 +138,7 @@ export default function ManageFranchise() {
           <input
             type="text"
             name="city"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.city}
             onChange={handleChange}
             required
@@ -148,7 +148,7 @@ export default function ManageFranchise() {
           <label className="form-label">State</label>
           <select
             name="state"
-            className="form-select bg-light"
+            className="form-select bg-white"
             value={form.state}
             onChange={handleChange}
             required
@@ -166,7 +166,7 @@ export default function ManageFranchise() {
           <input
             type="number"
             name="pincode"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.pincode}
             onChange={handleChange}
             required
@@ -176,7 +176,7 @@ export default function ManageFranchise() {
           <label className="form-label">Status</label>
           <select
             name="status"
-            className="form-select bg-light"
+            className="form-select bg-white"
             value={form.status}
             onChange={handleChange}
             required
@@ -191,7 +191,7 @@ export default function ManageFranchise() {
           <input
             type="password"
             name="password"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.password}
             onChange={handleChange}
             required
@@ -202,7 +202,7 @@ export default function ManageFranchise() {
           <input
             type="password"
             name="verifyPassword"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={form.verifyPassword}
             onChange={handleChange}
             required

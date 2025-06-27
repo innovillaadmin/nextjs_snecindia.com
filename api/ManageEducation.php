@@ -53,6 +53,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             echo $conn->error;
         }
+        if ($data->action == 'getDepartment') {
+
+            $retval = $conn->query("SELECT id, name FROM departments order by name")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+            echo $conn->error;
+        }
+        if ($data->action == 'fetchCoursesByDepartment') {
+            $depid = $act->sanitize($data->depid);
+
+            $retval = $conn->query("SELECT id, name FROM courses where department_id='$depid' order by name asc")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+        if ($data->action == 'addEnrollment') {
+            $studentid = $act->sanitize($data->studentid);
+            $studentname = $act->sanitize($data->studentname);
+            $rollnumber = $act->sanitize($data->rollnumber);
+            $session = $act->sanitize($data->session);
+            $department = $act->sanitize($data->department);
+            $course = $act->sanitize($data->course);
+            $semester = $act->sanitize($data->semester);
+            $enrollmentnumber = $act->sanitize($data->enrollmentnumber);
+
+            $depResult = $conn->query("SELECT name FROM departments WHERE id='$department'");
+            $depRow = $depResult->fetch_assoc();
+            $department_name = $depRow['name'];
+
+            $courseResult = $conn->query("SELECT name, duration FROM courses WHERE id='$course'");
+            $courseRow = $courseResult->fetch_assoc();
+            $course_name = $courseRow['name'];
+            $course_duration = $courseRow['duration'];
+
+
+            $conn->query(
+                "INSERT INTO course_enrollment (
+                        student_id, student_name, rollnumber, 
+                        session, department_id, department_name,
+                        course_id, course_name, course_duration,
+                        semester, enrollment_no, added_by_id, 
+                        added_by_name, timestamp
+                    ) VALUES (
+                        '$studentid', '$studentname', '$rollnumber', 
+                        '$session', '$department', '$department_name',
+                        '$course', '$course_name', '$course_duration',
+                        '$semester', '$enrollmentnumber', '$userid', 
+                        '$username', NOW()
+                    )"
+            );
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            }
+        }
 
         if ($data->action == 'getTableData') {
             $table = $act->sanitize($data->table ?? '');
@@ -276,6 +344,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'message' => $conn->error
                 ]);
             }
+        }
+
+        if ($data->action == 'searchstudent') {
+            $searchkey = $act->sanitize($data->searchkey) ?? '';
+
+            if ($searchkey != '') {
+                $retval = $conn->query("Select * from userdata 
+                                                where userrole='student' 
+                                                and CONCAT_WS(' ', fname, mname, lname) like '%$searchkey%'
+                                                or rollnumber like '%$searchkey%'
+                                                or uid_number like '%$searchkey%'
+                                                or contact like '%$searchkey%'
+                                                or email like '%$searchkey%'
+                                                order by id desc 
+                                                limit 100")->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $retval = $conn->query("Select * from userdata 
+                                                where userrole='student' 
+                                                order by id desc 
+                                                limit 100")->fetch_all(MYSQLI_ASSOC);
+            }
+
+            echo json_encode([
+                'status' => 'success',
+                'retval' => $retval
+            ]);
         }
 
     }

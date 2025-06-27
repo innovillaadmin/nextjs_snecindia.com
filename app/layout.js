@@ -82,10 +82,12 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
-        {children}
-        <Footer />
+        <div className="bg-light">
+          <Header />
+          {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

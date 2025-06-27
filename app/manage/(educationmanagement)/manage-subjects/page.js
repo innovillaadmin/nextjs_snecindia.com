@@ -87,7 +87,7 @@ export default function AddSubjects() {
           </label>
           <select
             id="department"
-            className="form-select bg-light"
+            className="form-select bg-white"
             value={selectedDepartment}
             onChange={fetchCourseByDepartment}
             required
@@ -107,7 +107,7 @@ export default function AddSubjects() {
           </label>
           <select
             id="course"
-            className="form-select bg-light"
+            className="form-select bg-white"
             value={selectedCourse}
             onChange={(e) => setSelectedCourse(e.target.value)}
             required
@@ -128,7 +128,7 @@ export default function AddSubjects() {
           </label>
           <select
             id="semester"
-            className="form-select bg-light"
+            className="form-select bg-white"
             value={semester}
             onChange={(e) => setsemester(e.target.value)}
             required
@@ -142,6 +142,10 @@ export default function AddSubjects() {
             <option value="part_sem_6">Part/Semester 6</option>
             <option value="part_sem_7">Part/Semester 7</option>
             <option value="part_sem_8">Part/Semester 8</option>
+            <option value="year_1">Year 1</option>
+            <option value="year_2">Year 2</option>
+            <option value="year_3">Year 3</option>
+            <option value="year_4">Year 4</option>
           </select>
         </div>
 
@@ -152,7 +156,7 @@ export default function AddSubjects() {
           <input
             type="text"
             id="subjectName"
-            className="form-control bg-light"
+            className="form-control bg-white"
             value={subjectName}
             onChange={(e) => setSubjectName(e.target.value)}
             required

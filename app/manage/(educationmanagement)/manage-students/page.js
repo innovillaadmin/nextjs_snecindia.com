@@ -159,7 +159,7 @@ const ManageAdmissions = () => {
               id="rollnumber"
               value={formdata.rollnumber}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -171,7 +171,7 @@ const ManageAdmissions = () => {
               id="fname"
               value={formdata.fname}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -183,7 +183,7 @@ const ManageAdmissions = () => {
               id="mname"
               value={formdata.mname}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -194,7 +194,7 @@ const ManageAdmissions = () => {
               id="lname"
               value={formdata.lname}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -205,7 +205,7 @@ const ManageAdmissions = () => {
               id="mother_name"
               value={formdata.mother_name}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -216,7 +216,7 @@ const ManageAdmissions = () => {
               id="father_name"
               value={formdata.father_name}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -227,7 +227,7 @@ const ManageAdmissions = () => {
               id="dob"
               value={formdata.dob}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -238,7 +238,7 @@ const ManageAdmissions = () => {
               id="gender"
               value={formdata.gender}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             >
               <option value="">Select Gender</option>
@@ -254,7 +254,7 @@ const ManageAdmissions = () => {
               id="caste_category"
               value={formdata.caste_category}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             >
               <option value="general">General</option>
@@ -273,7 +273,7 @@ const ManageAdmissions = () => {
               id="uid_number"
               value={formdata.uid_number}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-6"></div>
@@ -285,7 +285,7 @@ const ManageAdmissions = () => {
               id="corresponding_address"
               value={formdata.corresponding_address}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -296,7 +296,7 @@ const ManageAdmissions = () => {
               id="corresponding_city"
               value={formdata.corresponding_city}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -306,7 +306,7 @@ const ManageAdmissions = () => {
               id="corresponding_state"
               value={formdata.corresponding_state}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             >
               <option value="">Select from List</option>
@@ -328,7 +328,7 @@ const ManageAdmissions = () => {
               id="corresponding_pincode"
               value={formdata.corresponding_pincode}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -341,7 +341,7 @@ const ManageAdmissions = () => {
               id="permanent_address"
               value={formdata.permanent_address}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -352,7 +352,7 @@ const ManageAdmissions = () => {
               id="permanent_city"
               value={formdata.permanent_city}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -362,7 +362,7 @@ const ManageAdmissions = () => {
               id="permanent_state"
               value={formdata.permanent_state}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             >
               <option value="">Select from List</option>
@@ -384,7 +384,7 @@ const ManageAdmissions = () => {
               id="permanent_pincode"
               value={formdata.permanent_pincode}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -398,7 +398,7 @@ const ManageAdmissions = () => {
               id="contact_number_father"
               value={formdata.contact_number_father}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -411,7 +411,7 @@ const ManageAdmissions = () => {
               id="contact_number_mother"
               value={formdata.contact_number_mother}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -424,7 +424,7 @@ const ManageAdmissions = () => {
               id="contact_number"
               value={formdata.contact_number}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -437,7 +437,7 @@ const ManageAdmissions = () => {
               id="alternate_number"
               value={formdata.alternate_number}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
           <div className="col-md-3">
@@ -448,7 +448,7 @@ const ManageAdmissions = () => {
               id="email_address"
               value={formdata.email_address}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
               required
             />
           </div>
@@ -462,7 +462,7 @@ const ManageAdmissions = () => {
               id="whatsapp_number"
               value={formdata.whatsapp_number}
               onChange={handleChange}
-              className="form-control bg-light"
+              className="form-control bg-white"
             />
           </div>
 
@@ -472,7 +472,7 @@ const ManageAdmissions = () => {
               type="file"
               name="photograph"
               id="photograph"
-              className="form-control bg-light"
+              className="form-control bg-white"
               onChange={handleFileChange}
             />
           </div>
@@ -811,7 +811,7 @@ const ManageAdmissions = () => {
             </table>
           </div>
           <div className="col-12 mt-3">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-success">
               Save Admission
             </button>
           </div>

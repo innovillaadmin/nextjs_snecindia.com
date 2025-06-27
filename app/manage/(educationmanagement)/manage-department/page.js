@@ -53,7 +53,7 @@ export default function AddDepartment() {
           </label>
           <input
             type="text"
-            className="form-control bg-light"
+            className="form-control bg-white"
             id="deptCode"
             value={deptCode}
             onChange={(e) => setDeptCode(e.target.value)}
@@ -65,7 +65,7 @@ export default function AddDepartment() {
           </label>
           <input
             type="text"
-            className="form-control bg-light"
+            className="form-control bg-white"
             id="deptName"
             value={deptName}
             onChange={(e) => setDeptName(e.target.value)}
