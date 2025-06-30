@@ -15,7 +15,8 @@ const EnrollmentData = () => {
   const [selectedSession, setSelectedSession] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
 
-  // Fetch department list on mount
+  const paymentStatusOptions = ["paid", "pending", "overdue"];
+
   useEffect(() => {
     fetchDepartmentList();
   }, []);
@@ -43,6 +44,7 @@ const EnrollmentData = () => {
     setSelectedSession("");
     setSemesterList([]);
     setSelectedSemester("");
+    setEnrollmentData([]);
 
     if (depId) {
       axios
@@ -67,6 +69,7 @@ const EnrollmentData = () => {
     setSelectedSession("");
     setSemesterList([]);
     setSelectedSemester("");
+    setEnrollmentData([]);
 
     if (courseId) {
       axios
@@ -89,6 +92,7 @@ const EnrollmentData = () => {
     setSelectedSession(sessionId);
     setSemesterList([]);
     setSelectedSemester("");
+    setEnrollmentData([]);
 
     if (sessionId) {
       axios
@@ -110,7 +114,6 @@ const EnrollmentData = () => {
     setSelectedSemester(e.target.value);
   };
 
-  // Fetch enrollment data whenever filters change
   useEffect(() => {
     if (selectedDepartment) {
       axios
@@ -133,12 +136,37 @@ const EnrollmentData = () => {
     }
   }, [selectedDepartment, selectedCourse, selectedSession, selectedSemester]);
 
+  // Handle payment status update
+  const handlePaymentStatusChange = (enrollmentId, newStatus) => {
+    axios
+      .post(API_PATH + "ManageEducation.php", {
+        userid: localStorage.getItem(LS_USERID),
+        usertoken: localStorage.getItem(LS_USERTOKEN),
+        action: "updatePaymentStatusAgainstEnrollment",
+        enrollment_id: enrollmentId,
+        new_status: newStatus,
+      })
+      .then((r) => {
+        if (r.data.status === "success") {
+          // Update local state too
+          setEnrollmentData((prev) =>
+            prev.map((item) =>
+              item.id === enrollmentId
+                ? { ...item, payment_status: newStatus }
+                : item
+            )
+          );
+        }
+      });
+  };
+
   return (
     <div>
       <div className="row m-0 mx-md-3">
         <div className="col-md-3 bg-white shadow mt-3 p-md-2 border rounded">
           <div className="bg-warning fw-bold rounded p-1 mb-3">Data Filter</div>
-
+          {/* Same filter code as before */}
+          {/* ... */}
           <div className="mb-2">
             <label htmlFor="departmentname">Department Name</label>
             <select
@@ -221,6 +249,7 @@ const EnrollmentData = () => {
               <thead>
                 <tr>
                   <th>Sr</th>
+                  <th>Payment Status</th>
                   <th>Session</th>
                   <th>Semester</th>
                   <th>Student Name</th>
@@ -237,6 +266,22 @@ const EnrollmentData = () => {
                   enrollmentData.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
+                      <td>
+                        <select
+                          className="form-select form-select-sm"
+                          value={item.payment_status}
+                          style={{ width: "100px" }}
+                          onChange={(e) =>
+                            handlePaymentStatusChange(item.id, e.target.value)
+                          }
+                        >
+                          {paymentStatusOptions.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
                       <td>{item.session}</td>
                       <td>{item.semester}</td>
                       <td>{item.student_name}</td>
@@ -250,7 +295,7 @@ const EnrollmentData = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="10" className="text-center">
+                    <td colSpan="11" className="text-center">
                       No data found
                     </td>
                   </tr>

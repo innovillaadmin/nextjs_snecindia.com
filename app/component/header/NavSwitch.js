@@ -110,6 +110,20 @@ const NavSwitch = () => {
               },
             ]}
           />
+          <NavLi
+            title="Examination ▾"
+            icon={""}
+            index={1} // Ensure index is defined
+            isOpen={openIndex === 1}
+            onToggle={() => handleToggle(1)}
+            navlinks={[
+              {
+                id: "Examination Questions",
+                name: "Examination Questions",
+                link: "/manage/examination-questions",
+              },
+            ]}
+          />
           <li className={style.li_single}>
             <Link href={"/logout"}>Logout</Link>
           </li>

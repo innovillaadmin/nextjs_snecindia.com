@@ -106,6 +106,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
+        if ($data->action == 'fetchsemesterbycourse') {
+            $course = $act->sanitize($data->course);
+
+            $retval = $conn->query("SELECT part_or_semester FROM subjects where course_id='$course' group by part_or_semester order by part_or_semester asc ")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+        if ($data->action == 'fetchsubjectbysemester') {
+            $semester = $act->sanitize($data->semester);
+            $course = $act->sanitize($data->selectedCourse);
+
+            $retval = $conn->query("SELECT id, subject_name FROM subjects where course_id='$course' and part_or_semester='$semester' order by subject_name asc")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+
+        if ($data->action == 'fetchExamQuestions') {
+            $department = $act->sanitize($data->department);
+            $course = $act->sanitize($data->course);
+            $semester = $act->sanitize($data->semester);
+            $subject = $act->sanitize($data->subject);
+
+
+            if (
+                empty($department) || empty($course) || empty($semester) || empty($subject)
+            ) {
+                $retval = $conn->query("SELECT * FROM exam_questions order by id desc limit 100")->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $qry = "select * from exam_questions where ";
+                if (!empty($department)) {
+                    $qry .= "department_id='$department' and ";
+                }
+                if (!empty($course)) {
+                    $qry .= "course_id='$course' and ";
+                }
+                if (!empty($semester)) {
+                    $qry .= "part_or_semester='$semester' and ";
+                }
+                if (!empty($subject)) {
+                    $qry .= "subject_id='$subject' and ";
+                }
+                $qry = rtrim($qry, 'and ');
+                $retval = $conn->query($qry)->fetch_all(MYSQLI_ASSOC);
+            }
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+
+
+        if ($data->action == 'updatePaymentStatusAgainstEnrollment') {
+            $enrollment_id = $act->sanitize($data->enrollment_id);
+            $new_status = $act->sanitize($data->new_status);
+            $admitcardstatus = $new_status == 'paid' ? 'issued' : 'pending';
+
+            $retval = $conn->query("UPDATE course_enrollment SET fee_payment_status='$new_status', admit_card_status='$admitcardstatus' where id='$enrollment_id'");
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
 
         if ($data->action == 'addEnrollment') {
             $studentid = $act->sanitize($data->studentid);
