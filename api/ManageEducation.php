@@ -79,6 +79,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
+
+        if ($data->action == 'fetchsessionbycourse') {
+            $courseid = $act->sanitize($data->course);
+
+            $retval = $conn->query("SELECT session FROM course_enrollment where course_id='$courseid' order by session asc")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+        if ($data->action == 'fetchsemesterbysession') {
+            $session = $act->sanitize($data->session);
+
+            $retval = $conn->query("SELECT semester FROM course_enrollment where session='$session' order by semester asc")->fetch_all(MYSQLI_ASSOC);
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+
         if ($data->action == 'addEnrollment') {
             $studentid = $act->sanitize($data->studentid);
             $studentname = $act->sanitize($data->studentname);
@@ -120,6 +148,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'status' => 'success',
                 ]);
             }
+        }
+        if ($data->action == 'getenrollmentdata') {
+            $selectedDepartment = $act->sanitize($data->selectedDepartment);
+            $selectedCourse = $act->sanitize($data->selectedCourse);
+            $selectedSession = $act->sanitize($data->selectedSession);
+            $selectedSemester = $act->sanitize($data->selectedSemester);
+
+            if (
+                empty($selectedDepartment) &&
+                empty($selectedCourse) &&
+                empty($selectedSession) &&
+                empty($selectedSemester)
+            ) {
+                $qry = "SELECT * from course_enrollment order by id desc limit 200";
+
+            } else {
+                $qry = "SELECT * from course_enrollment where ";
+                if (!empty($selectedDepartment)) {
+                    $qry .= "department_id='$selectedDepartment' and ";
+                }
+                if (!empty($selectedCourse)) {
+                    $qry .= "course_id='$selectedCourse' and ";
+                }
+                if (!empty($selectedSession)) {
+                    $qry .= "session='$selectedSession' and ";
+                }
+                if (!empty($selectedSemester)) {
+                    $qry .= "semester='$selectedSemester' and ";
+                }
+                $qry = rtrim($qry, ' and ');
+                $qry .= " order by id desc limit 200";
+            }
+
+            $retval = $conn->query($qry)->fetch_all(MYSQLI_ASSOC);
+
+
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+            }
+
+            echo $conn->error;
         }
 
         if ($data->action == 'getTableData') {

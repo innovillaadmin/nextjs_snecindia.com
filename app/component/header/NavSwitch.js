@@ -103,6 +103,11 @@ const NavSwitch = () => {
                 name: "Course Enrollment",
                 link: "/manage/manage-course-enrollment",
               },
+              {
+                id: "CourseEnrollmentData",
+                name: "Manage Enrollment",
+                link: "/manage/manage-enrollment-data",
+              },
             ]}
           />
           <li className={style.li_single}>
