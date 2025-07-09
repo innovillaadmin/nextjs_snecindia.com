@@ -23,8 +23,9 @@ const ExamQuestions = () => {
   const [showForm, setShowForm] = useState(false);
 
   // Form fields
-  const [questionText, setQuestionText] = useState("");
-  const [marks, setMarks] = useState("");
+  const [examDate, setExamDate] = useState("");
+  const [examStartTime, setExamStartTime] = useState("");
+  const [examEndTime, setExamEndTime] = useState("");
 
   // Fetch departments on load
   useEffect(() => {
@@ -124,38 +125,38 @@ const ExamQuestions = () => {
     setQuestionList([]);
 
     if (subjectId) {
-      fetchQuestions(
-        selectedDepartment,
-        selectedCourse,
-        selectedSemester,
-        subjectId
-      );
+      fetchQuestions();
     }
   };
 
-  const fetchQuestions = useCallback(
-    (depId, courseId, semesterId, subjectId) => {
-      axios
-        .post(API_PATH + "ManageEducation.php", {
-          userid: localStorage.getItem(LS_USERID),
-          usertoken: localStorage.getItem(LS_USERTOKEN),
-          action: "fetchExamQuestions",
-          department: depId,
-          course: courseId,
-          semester: semesterId,
-          subject: subjectId,
-          session: selectedSession,
-        })
-        .then((res) => {
-          if (res.data.status === "success") {
-            setQuestionList(res.data.retval);
-          }
-        });
-    },
-    []
-  );
+  const fetchQuestions = useCallback(() => {
+    axios
+      .post(API_PATH + "ManageEducation.php", {
+        userid: localStorage.getItem(LS_USERID),
+        usertoken: localStorage.getItem(LS_USERTOKEN),
+        action: "fetchExamSchedule",
+        department: selectedDepartment,
+        course: selectedCourse,
+        semester: selectedSemester,
+        subject: selectedSubject,
+        session: selectedSession,
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          setQuestionList(res.data.retval);
+        } else {
+          setQuestionList([]);
+        }
+      });
+  }, [
+    selectedDepartment,
+    selectedCourse,
+    selectedSemester,
+    selectedSubject,
+    selectedSession,
+  ]);
 
-  const handleAddQuestion = useCallback(
+  const handleScheduleExamination = useCallback(
     (e) => {
       e.preventDefault();
       if (
@@ -163,9 +164,9 @@ const ExamQuestions = () => {
         !selectedCourse ||
         !selectedSemester ||
         !selectedSubject ||
-        !questionText ||
-        !selectedSession ||
-        !marks
+        !examDate ||
+        !examStartTime ||
+        !examEndTime
       ) {
         alert("Please fill all fields.");
         return;
@@ -175,26 +176,22 @@ const ExamQuestions = () => {
         .post(API_PATH + "ManageEducation.php", {
           userid: localStorage.getItem(LS_USERID),
           usertoken: localStorage.getItem(LS_USERTOKEN),
-          action: "addExamQuestion",
+          action: "addExamSchedule",
           department: selectedDepartment,
           course: selectedCourse,
           semester: selectedSemester,
           subject: selectedSubject,
-          question_text: questionText,
           session: selectedSession,
-          marks: marks,
+          date: examDate,
+          startTime: examStartTime,
+          endTime: examEndTime,
         })
         .then((res) => {
           if (res.data.status === "success") {
-            setQuestionText("");
-            setMarks("");
-            fetchQuestions(
-              selectedDepartment,
-              selectedCourse,
-              selectedSemester,
-              selectedSubject,
-              selectedSession
-            );
+            setExamDate("");
+            setExamEndTime("");
+            setExamStartTime("");
+            fetchQuestions();
           } else {
             alert("Error adding question");
           }
@@ -205,31 +202,28 @@ const ExamQuestions = () => {
       selectedCourse,
       selectedSemester,
       selectedSubject,
-      questionText,
       selectedSession,
-      marks,
+      examDate,
+      examStartTime,
+      examEndTime,
     ]
   );
 
   useEffect(() => {
-    fetchQuestions(
-      selectedDepartment,
-      selectedCourse,
-      selectedSemester,
-      selectedSubject
-    );
+    fetchQuestions();
   }, [
     fetchQuestions,
     selectedDepartment,
     selectedCourse,
     selectedSemester,
     selectedSubject,
+    selectedSession,
   ]);
   return (
     <div className="row m-0 mx-md-3">
       <div className="col-md-3 bg-white shadow mt-3 p-md-2 border rounded">
         <div className="bg-warning fw-bold rounded p-1 mb-3">
-          Filter Questions
+          Filter Examination
         </div>
 
         <div className="mb-2">
@@ -303,7 +297,7 @@ const ExamQuestions = () => {
           <select
             className="form-control"
             value={selectedSession}
-            onChange={handleSubjectChange}
+            onChange={(e) => setSelectedSession(e.target.value)}
           >
             <option value="2025-2026">2025-2026</option>
             <option value="2024-2025">2024-2025</option>
@@ -316,33 +310,46 @@ const ExamQuestions = () => {
           disabled={!selectedSubject}
           onClick={() => setShowForm(!showForm)}
         >
-          {showForm ? "Close Form" : "Add Question"}
+          {showForm ? "Close Form" : "Add Examination"}
         </button>
       </div>
 
       <div className="col-md-9 mt-3">
         {showForm && (
           <div className="border rounded shadow p-3 mb-3 bg-light">
-            <h5 className="mb-3">Add New Question</h5>
-            <form onSubmit={handleAddQuestion}>
-              <div className="mb-2">
-                <label>Question Text</label>
-                <textarea
-                  className="form-control"
-                  value={questionText}
-                  onChange={(e) => setQuestionText(e.target.value)}
-                  required
-                ></textarea>
-              </div>
-              <div className="mb-2">
-                <label>Marks</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={marks}
-                  onChange={(e) => setMarks(e.target.value)}
-                  required
-                />
+            <h5 className="mb-3">Schedule Examination</h5>
+            <form onSubmit={handleScheduleExamination}>
+              <div className="row ">
+                <div className="col-md-4 mb-2">
+                  <label>Examination Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={examDate}
+                    onChange={(e) => setExamDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-4 mb-2">
+                  <label>Start Time</label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    value={examStartTime}
+                    onChange={(e) => setExamStartTime(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-4 mb-2">
+                  <label>End Time</label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    value={examEndTime}
+                    onChange={(e) => setExamEndTime(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
               <button type="submit" className="btn btn-success">
                 Submit
@@ -351,25 +358,43 @@ const ExamQuestions = () => {
           </div>
         )}
 
-        <div className="overflow-auto border rounded shadow">
+        <div className="overflow-x-scroll border rounded shadow">
           <table className="table table-striped">
             <thead className="table-white">
               <tr>
                 <th>#</th>
-                <th>Question</th>
-                <th>Marks</th>
-                <th>Added By</th>
-                <th>Added At</th>
+                <th>Action</th>
+                <th>Department</th>
+                <th>Course</th>
+                <th>Semester</th>
+                <th>Session</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Created At</th>
               </tr>
             </thead>
             <tbody>
               {questionList.length > 0 ? (
                 questionList.map((q, i) => (
                   <tr key={i}>
-                    <td>{q.id}</td>
-                    <td>{q.question}</td>
-                    <td>{q.marks}</td>
-                    <td>{q.created_by}</td>
+                    <td>{i + 1}</td>
+                    <td>
+                      <button type="button" className="btn btn-danger">
+                        Check Answers
+                      </button>
+                    </td>
+                    <td>{q.department_name}</td>
+                    <td>{q.course_name}</td>
+                    <td>{q.semester}</td>
+                    <td>{q.session}</td>
+                    <td>{q.subject_name}</td>
+                    <td>{q.date}</td>
+                    <td>{q.start_time}</td>
+                    <td>{q.end_time}</td>
+                    <td>{q.status}</td>
                     <td>{q.created_at}</td>
                   </tr>
                 ))

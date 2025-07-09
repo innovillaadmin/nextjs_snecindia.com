@@ -122,6 +122,11 @@ const NavSwitch = () => {
                 name: "Examination Questions",
                 link: "/manage/examination-questions",
               },
+              {
+                id: "ScheduleExamination",
+                name: "Manage Examination",
+                link: "/manage/examination-schedule",
+              },
             ]}
           />
           <li className={style.li_single}>

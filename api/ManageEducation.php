@@ -22,6 +22,8 @@ class ManageEducation extends Config
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+
+
     $act = new ManageEducation();
     $conn = $act->connection();
     $data = json_decode(file_get_contents("php://input")); // pass ,true if you want to return array instead of an object
@@ -134,6 +136,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        if ($data->action == 'addExamQuestion') {
+            $department = $act->sanitize($data->department);
+            $course = $act->sanitize($data->course);
+            $semester = $act->sanitize($data->semester);
+            $subject = $act->sanitize($data->subject);
+            $session = $act->sanitize($data->session);
+            $question_text = $act->sanitize($data->question_text);
+            $marks = $act->sanitize($data->marks);
+
+            $conn->query("INSERT INTO `exam_questions`(
+                            `question`, `marks`, `department_id`, 
+                            `course_id`, `semester`, `subject_id`, 
+                            `session`, `created_by`
+                            ) VALUES (
+                            '$question_text', '$marks', '$department',
+                            '$course', '$semester', '$subject',
+                            '$session', '$userid'
+                            )");
+
+            if (!$conn->error && $conn->affected_rows > 0) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            }
+
+        }
+        if ($data->action == 'addExamSchedule') {
+            $department = $act->sanitize($data->department);
+            $course = $act->sanitize($data->course);
+            $semester = $act->sanitize($data->semester);
+            $subject = $act->sanitize($data->subject);
+            $session = $act->sanitize($data->session);
+            $date = $act->sanitize($data->date);
+            $startTime = $act->sanitize($data->startTime);
+            $endTime = $act->sanitize($data->endTime);
+
+            $conn->query("INSERT INTO `exam_schedule`(
+                                `department_id`, `course_id`, `subject_id`, 
+                                `session`, `semester`, `date`, 
+                                `start_time`, `end_time`, 
+                                `created_by`) VALUES(
+                                '$department', '$course', '$subject',
+                                '$session', '$semester', '$date',
+                                '$startTime', '$endTime',
+                                '$userid'
+                                )");
+
+            if (!$conn->error && $conn->affected_rows > 0) {
+                echo json_encode([
+                    'status' => 'success',
+                ]);
+            }
+
+        }
         if ($data->action == 'fetchExamQuestions') {
             $department = $act->sanitize($data->department);
             $course = $act->sanitize($data->course);
@@ -154,11 +210,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $qry .= "course_id='$course' and ";
                 }
                 if (!empty($semester)) {
-                    $qry .= "part_or_semester='$semester' and ";
+                    $qry .= "semester='$semester' and ";
                 }
                 if (!empty($subject)) {
                     $qry .= "subject_id='$subject' and ";
                 }
+                $qry = rtrim($qry, 'and ');
+                $retval = $conn->query($qry)->fetch_all(MYSQLI_ASSOC);
+            }
+
+            if (!$conn->error) {
+                echo json_encode([
+                    'status' => 'success',
+                    'retval' => $retval
+                ]);
+
+            }
+        }
+        if ($data->action == 'fetchExamSchedule') {
+            $department = $act->sanitize($data->department);
+            $course = $act->sanitize($data->course);
+            $semester = $act->sanitize($data->semester);
+            $subject = $act->sanitize($data->subject);
+            $session = (string) $act->sanitize((string) $data->session);
+
+
+            if (
+                empty($department) || empty($course) || empty($semester) || empty($subject) || empty($session)
+            ) {
+                $retval = $conn->query("SELECT 
+                                                (select name from departments where id=department_id) as department_name,
+                                                (select name from courses where id=course_id) as course_name,
+                                                (select subject_name from subjects where id=subject_id) as subject_name,
+                                                session, semester, date, start_time, end_time, status, created_at 
+                                                FROM exam_schedule order by id desc limit 100")->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $qry = "SELECT
+                        (select name from departments where id=department_id) as department_name,
+                        (select name from courses where id=course_id) as course_name,
+                        (select subject_name from subjects where id=subject_id) as subject_name,
+                        session, semester, date, start_time, end_time, status, created_at
+                        from exam_schedule where ";
+
+                if (!empty($department)) {
+                    $qry .= "department_id='$department' and ";
+                }
+                if (!empty($course)) {
+                    $qry .= "course_id='$course' and ";
+                }
+                if (!empty($semester)) {
+                    $qry .= "semester='$semester' and ";
+                }
+                if (!empty($subject)) {
+                    $qry .= " subject_id='$subject' and ";
+                }
+                if (!empty($session)) {
+                    $qry .= "session='$session' and ";
+                }
+
                 $qry = rtrim($qry, 'and ');
                 $retval = $conn->query($qry)->fetch_all(MYSQLI_ASSOC);
             }
