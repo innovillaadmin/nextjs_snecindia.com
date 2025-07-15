@@ -143,14 +143,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subject = $act->sanitize($data->subject);
             $session = $act->sanitize($data->session);
             $question_text = $act->sanitize($data->question_text);
+
+            $option1 = $act->sanitize($data->option1);
+            $option2 = $act->sanitize($data->option2);
+            $option3 = $act->sanitize($data->option3);
+            $option4 = $act->sanitize($data->option4);
+
+            $correct_answer = $act->sanitize($data->correct_answer);
             $marks = $act->sanitize($data->marks);
 
             $conn->query("INSERT INTO `exam_questions`(
-                            `question`, `marks`, `department_id`, 
+                            `question`,`option_1`,`option_2`,`option_3`,`option_4`,`correct_answer`, 
+                            `marks`, `department_id`, 
                             `course_id`, `semester`, `subject_id`, 
                             `session`, `created_by`
                             ) VALUES (
-                            '$question_text', '$marks', '$department',
+                            '$question_text','$option1', '$option2', '$option3', '$option4', '$correct_answer', 
+                            '$marks', '$department',
                             '$course', '$semester', '$subject',
                             '$session', '$userid'
                             )");

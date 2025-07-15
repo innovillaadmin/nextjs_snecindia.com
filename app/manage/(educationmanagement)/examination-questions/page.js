@@ -24,6 +24,12 @@ const ExamQuestions = () => {
 
   // Form fields
   const [questionText, setQuestionText] = useState("");
+  const [option1, setoption1] = useState("");
+  const [option2, setoption2] = useState("");
+  const [option3, setoption3] = useState("");
+  const [option4, setoption4] = useState("");
+  const [correctAnswer, setcorrectAnswer] = useState("");
+
   const [marks, setMarks] = useState("");
 
   // Fetch departments on load
@@ -182,11 +188,21 @@ const ExamQuestions = () => {
           subject: selectedSubject,
           question_text: questionText,
           session: selectedSession,
+          option1: option1,
+          option2: option2,
+          option3: option3,
+          option4: option4,
+          correct_answer: correctAnswer,
           marks: marks,
         })
         .then((res) => {
           if (res.data.status === "success") {
             setQuestionText("");
+            setoption1("");
+            setoption2("");
+            setoption3("");
+            setoption4("");
+            setcorrectAnswer("");
             setMarks("");
             fetchQuestions(
               selectedDepartment,
@@ -325,25 +341,83 @@ const ExamQuestions = () => {
           <div className="border rounded shadow p-3 mb-3 bg-light">
             <h5 className="mb-3">Add New Question</h5>
             <form onSubmit={handleAddQuestion}>
-              <div className="mb-2">
-                <label>Question Text</label>
-                <textarea
-                  className="form-control"
-                  value={questionText}
-                  onChange={(e) => setQuestionText(e.target.value)}
-                  required
-                ></textarea>
+              <div className="row">
+                <div className="col-md-12 mb-2">
+                  <label>Question Text</label>
+                  <textarea
+                    className="form-control"
+                    value={questionText}
+                    onChange={(e) => setQuestionText(e.target.value)}
+                    required
+                  ></textarea>
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Option 1</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={option1}
+                    onChange={(e) => setoption1(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Option 2</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={option2}
+                    onChange={(e) => setoption2(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Option 3</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={option3}
+                    onChange={(e) => setoption3(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Option 4</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={option4}
+                    onChange={(e) => setoption4(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Correct Answer</label>
+                  <select
+                    className="form-control"
+                    value={correctAnswer}
+                    onChange={(e) => setcorrectAnswer(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Answer</option>
+                    <option value="option_1">Option 1</option>
+                    <option value="option_2">Option 2</option>
+                    <option value="option_3">Option 3</option>
+                    <option value="option_4">Option 4</option>
+                  </select>
+                </div>
+                <div className="col-md-3 mb-2">
+                  <label>Marks</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={marks}
+                    onChange={(e) => setMarks(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-              <div className="mb-2">
-                <label>Marks</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={marks}
-                  onChange={(e) => setMarks(e.target.value)}
-                  required
-                />
-              </div>
+
               <button type="submit" className="btn btn-success">
                 Submit
               </button>
@@ -351,12 +425,17 @@ const ExamQuestions = () => {
           </div>
         )}
 
-        <div className="overflow-auto border rounded shadow">
+        <div className="overflow-scroll border rounded shadow">
           <table className="table table-striped">
             <thead className="table-white">
               <tr>
                 <th>#</th>
                 <th>Question</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
+                <th>Correct Answer</th>
                 <th>Marks</th>
                 <th>Added By</th>
                 <th>Added At</th>
@@ -368,6 +447,11 @@ const ExamQuestions = () => {
                   <tr key={i}>
                     <td>{q.id}</td>
                     <td>{q.question}</td>
+                    <td>{q.option_1}</td>
+                    <td>{q.option_2}</td>
+                    <td>{q.option_3}</td>
+                    <td>{q.option_4}</td>
+                    <td>{q.correct_answer}</td>
                     <td>{q.marks}</td>
                     <td>{q.created_by}</td>
                     <td>{q.created_at}</td>
