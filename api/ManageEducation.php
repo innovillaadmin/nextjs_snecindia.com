@@ -652,7 +652,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = (object) $_POST;
             $userid = $act->sanitize($data->userid);
             $username = $act->sanitize($data->username);
-            $photograph = $act->uploadImage('photograph', 'assets/img/student/', 'student_');
+            $photograph = (isset($_FILES['photograph'])
+                && isset($_FILES['photograph']['error'])
+                && $_FILES['photograph']['error'] === UPLOAD_ERR_OK)
+                ? $act->uploadImage('photograph', 'assets/img/student/', 'student_')
+                : '';
             $rollnumber = $act->sanitize($data->rollnumber);
             $fname = $act->sanitize($data->fname);
             $mname = $act->sanitize($data->mname);
@@ -711,64 +715,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $others_marks_obtained = $act->sanitize($data->others_marks_obtained);
             $others_marks_in_pertentage = $act->sanitize($data->others_marks_in_pertentage);
 
+            $check_user = $conn->query("select * from userdata where contact='$contact_number' or email='$email_address'")->num_rows;
 
-            $createuser = " INSERT INTO `userdata`(
-                            `status`, `rollnumber`, `fname`, 
-                            `mname`, `lname`, `mother_name`, 
-                            `father_name`, `dob`, `gender`, 
-                            `caste_category`, `uid_number`, `nationality`, 
-                            `religion`, `corresponding_address`, `corresponding_city`, 
-                            `corresponding_state`, `corresponding_pincode`, `permanent_address`, 
-                            `permanent_city`, `permanent_state`, `permanent_pincode`, 
-                            `contact_number_father`, `contact_number_mother`, `contact`, 
-                            `email`, `password`, `userrole`, 
-                            `whatsapp_number`, `alternate_number`, `photograph`, 
-                            `highschool_school_name`, `highschool_board_university`, `highschool_year_of_passing`, 
-                            `highschool_stream`, `highschool_marks_obtained`, `highschool_marks_in_pertentage`, 
-                            `intermediate_school_name`, `intermediate_board_university`, `intermediate_year_of_passing`, 
-                            `intermediate_stream`, `intermediate_marks_obtained`, `intermediate_marks_in_pertentage`, 
-                            `diploma_school_name`, `diploma_board_university`, `diploma_year_of_passing`, 
-                            `diploma_stream`, `diploma_marks_obtained`, `diploma_marks_in_pertentage`, 
-                            `graduation_school_name`, `graduation_board_university`, `graduation_year_of_passing`, 
-                            `graduation_stream`, `graduation_marks_obtained`, `graduation_marks_in_pertentage`, 
-                            `others_school_name`, `others_board_university`, `others_year_of_passing`, 
-                            `others_stream`, `others_marks_obtained`, `others_marks_in_pertentage`, 
-                            `date_added`, `time_added`, `date_modified`, 
-                            `time_modified`, `added_by_id`, `added_by_name`) VALUES (
-                            'active', '$rollnumber', '$fname', 
-                            '$mname', '$lname', '$mother_name', 
-                            '$father_name', '$dob', '$gender', 
-                            '$caste_category', '$uid_number', '$nationality', 
-                            '', '$corresponding_address', '$corresponding_city', 
-                            '$corresponding_state', '$corresponding_pincode', '$permanent_address', 
-                            '$permanent_city', '$permanent_state', '$permanent_pincode', 
-                            '$contact_number_father', '$contact_number_mother', '$contact_number', 
-                            '$email_address', '$password', 'student', 
-                            '$whatsapp_number', '$alternate_number', '$photograph', 
-                            '$highschool_school_name', '$highschool_board_university', '$highschool_year_of_passing', 
-                            '$highschool_stream', '$highschool_marks_obtained', '$highschool_marks_in_pertentage', 
-                            '$intermediate_school_name', '$intermediate_board_university', '$intermediate_year_of_passing', 
-                            '$intermediate_stream', '$intermediate_marks_obtained', '$intermediate_marks_in_pertentage',
-                            '$diploma_school_name', '$diploma_board_university', '$diploma_year_of_passing', 
-                            '$diploma_stream', '$diploma_marks_obtained', '$diploma_marks_in_pertentage', 
-                            '$graduation_school_name', '$graduation_board_university', '$graduation_year_of_passing', 
-                            '$graduation_stream', '$graduation_marks_obtained', '$graduation_marks_in_pertentage', 
-                            '$others_school_name', '$others_board_university', '$others_year_of_passing', 
-                            '$others_stream', '$others_marks_obtained', '$others_marks_in_pertentage', 
-                            CURRENT_DATE(), CURRENT_TIME(), CURRENT_DATE(), 
-                            CURRENT_TIME(), '$userid', '$username') ";
+            if ($check_user == 0) {
+                $createuser = " INSERT INTO `userdata`(
+                                `status`, `rollnumber`, `fname`, 
+                                `mname`, `lname`, `mother_name`, 
+                                `father_name`, `dob`, `gender`, 
+                                `caste_category`, `uid_number`, `nationality`, 
+                                `religion`, `corresponding_address`, `corresponding_city`, 
+                                `corresponding_state`, `corresponding_pincode`, `permanent_address`, 
+                                `permanent_city`, `permanent_state`, `permanent_pincode`, 
+                                `contact_number_father`, `contact_number_mother`, `contact`, 
+                                `email`, `password`, `userrole`, 
+                                `whatsapp_number`, `alternate_number`, `photograph`, 
+                                `highschool_school_name`, `highschool_board_university`, `highschool_year_of_passing`, 
+                                `highschool_stream`, `highschool_marks_obtained`, `highschool_marks_in_pertentage`, 
+                                `intermediate_school_name`, `intermediate_board_university`, `intermediate_year_of_passing`, 
+                                `intermediate_stream`, `intermediate_marks_obtained`, `intermediate_marks_in_pertentage`, 
+                                `diploma_school_name`, `diploma_board_university`, `diploma_year_of_passing`, 
+                                `diploma_stream`, `diploma_marks_obtained`, `diploma_marks_in_pertentage`, 
+                                `graduation_school_name`, `graduation_board_university`, `graduation_year_of_passing`, 
+                                `graduation_stream`, `graduation_marks_obtained`, `graduation_marks_in_pertentage`, 
+                                `others_school_name`, `others_board_university`, `others_year_of_passing`, 
+                                `others_stream`, `others_marks_obtained`, `others_marks_in_pertentage`, 
+                                `date_added`, `time_added`, `date_modified`, 
+                                `time_modified`, `added_by_id`, `added_by_name`) VALUES (
+                                'active', '$rollnumber', '$fname', 
+                                '$mname', '$lname', '$mother_name', 
+                                '$father_name', '$dob', '$gender', 
+                                '$caste_category', '$uid_number', '$nationality', 
+                                '', '$corresponding_address', '$corresponding_city', 
+                                '$corresponding_state', '$corresponding_pincode', '$permanent_address', 
+                                '$permanent_city', '$permanent_state', '$permanent_pincode', 
+                                '$contact_number_father', '$contact_number_mother', '$contact_number', 
+                                '$email_address', '$password', 'student', 
+                                '$whatsapp_number', '$alternate_number', '$photograph', 
+                                '$highschool_school_name', '$highschool_board_university', '$highschool_year_of_passing', 
+                                '$highschool_stream', '$highschool_marks_obtained', '$highschool_marks_in_pertentage', 
+                                '$intermediate_school_name', '$intermediate_board_university', '$intermediate_year_of_passing', 
+                                '$intermediate_stream', '$intermediate_marks_obtained', '$intermediate_marks_in_pertentage',
+                                '$diploma_school_name', '$diploma_board_university', '$diploma_year_of_passing', 
+                                '$diploma_stream', '$diploma_marks_obtained', '$diploma_marks_in_pertentage', 
+                                '$graduation_school_name', '$graduation_board_university', '$graduation_year_of_passing', 
+                                '$graduation_stream', '$graduation_marks_obtained', '$graduation_marks_in_pertentage', 
+                                '$others_school_name', '$others_board_university', '$others_year_of_passing', 
+                                '$others_stream', '$others_marks_obtained', '$others_marks_in_pertentage', 
+                                CURRENT_DATE(), CURRENT_TIME(), CURRENT_DATE(), 
+                                CURRENT_TIME(), '$userid', '$username') ";
 
 
-            $usercreation = $conn->query($createuser);
+                $usercreation = $conn->query($createuser);
 
-            if ($usercreation && !$conn->error) {
-                echo json_encode([
-                    'status' => 'success',
-                ]);
+                if ($usercreation && !$conn->error) {
+                    echo json_encode([
+                        'status' => 'success',
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => $conn->error
+                    ]);
+
+                }
             } else {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => $conn->error
+                    'err' => 'multi'
                 ]);
             }
         }

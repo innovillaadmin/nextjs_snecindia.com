@@ -130,6 +130,14 @@ const ManageAdmissions = () => {
         setformdata(fd);
         fetchAdmissions();
         // setShowForm(false); // Optional: auto-hide after submit
+      } else {
+        if (res.data.err === "multi") {
+          alert(
+            "Failed to add admission, user already registered with same contact number or email address."
+          );
+        } else {
+          alert("Failed to add admission");
+        }
       }
       console.log(res.data); // handle success
     } catch (err) {
@@ -399,7 +407,6 @@ const ManageAdmissions = () => {
               value={formdata.contact_number_father}
               onChange={handleChange}
               className="form-control bg-white"
-              required
             />
           </div>
           <div className="col-md-3">
@@ -412,7 +419,6 @@ const ManageAdmissions = () => {
               value={formdata.contact_number_mother}
               onChange={handleChange}
               className="form-control bg-white"
-              required
             />
           </div>
           <div className="col-md-3">
@@ -424,7 +430,7 @@ const ManageAdmissions = () => {
               id="contact_number"
               value={formdata.contact_number}
               onChange={handleChange}
-              className="form-control bg-white"
+              className="form-control bg-white border-danger"
               required
             />
           </div>

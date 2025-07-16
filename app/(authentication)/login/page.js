@@ -28,8 +28,8 @@ const Login = () => {
       var redirectPath = "";
       if (userRole === "admin") {
         redirectPath = "/manage/dashboard";
-      } else {
-        redirectPath = "/";
+      } else if (userRole === "student") {
+        redirectPath = "/manage/student-course-enrollment";
       }
 
       redirectPath !== "" && router.push(redirectPath);

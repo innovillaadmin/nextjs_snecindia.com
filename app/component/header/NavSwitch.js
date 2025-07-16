@@ -334,6 +334,36 @@ const NavSwitch = () => {
           </li>
         </>
       );
+    case "student":
+      return (
+        <>
+          <li className={style.li_single}>
+            <Link href={"/"}>Home</Link>
+          </li>
+          <NavLi
+            title={"Courses ▾"}
+            icon={""}
+            index={1} // Ensure index is defined
+            isOpen={openIndex === 1}
+            onToggle={() => handleToggle(1)}
+            navlinks={[
+              {
+                id: "student_course_enrollment",
+                name: "Course Enrollment",
+                link: "/manage/student-course-enrollment",
+              },
+              {
+                id: "student_manage_examination",
+                name: "Upcoming Examination",
+                link: "/manage/student-upcoming-examination",
+              },
+            ]}
+          />
+          <li className={style.li_single}>
+            <Link href={"/logout"}>Logout</Link>
+          </li>
+        </>
+      );
     default:
       return (
         <>
