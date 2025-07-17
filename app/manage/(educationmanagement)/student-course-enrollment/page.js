@@ -1,6 +1,6 @@
 "use client";
 
-import { API_PATH, LS_USERID, LS_USERROLE } from "@/app/config";
+import { API_PATH, LS_USERID, LS_USERROLE, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import EnrollmentCard from "./EnrollmentCard";
@@ -12,6 +12,7 @@ const StudentCourseEnrollment = () => {
       .post(API_PATH + "ManageEducation.php", {
         action: "fetchcourseenrollmentbystudentid",
         userid: localStorage.getItem(LS_USERID),
+        usertoken: localStorage.getItem(LS_USERTOKEN),
         userrole: localStorage.getItem(LS_USERROLE),
       })
       .then((r) => {

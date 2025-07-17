@@ -645,6 +645,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
         }
 
+        if ($data->action == 'fetchcourseenrollmentbystudentid') {
+            $studentid = $act->sanitize($data->userid);
+            $retval = $conn->query("Select * from course_enrollment 
+                                            where student_id='$studentid' 
+                                            order by id desc 
+                                            limit 100")->fetch_all(MYSQLI_ASSOC);
+            echo json_encode([
+                'status' => 'success',
+                'retval' => $retval
+            ]);
+        }
+
     }
 
     if (isset($_POST['action']) && $act->isUserValid($_POST['usertoken'])) {

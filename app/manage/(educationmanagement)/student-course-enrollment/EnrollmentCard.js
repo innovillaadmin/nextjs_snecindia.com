@@ -8,8 +8,8 @@ export default function EnrollmentCard({ enrollment }) {
   return (
     <div className="container my-4">
       <div className="card border-primary">
-        <div className="card-header bg-primary text-white">
-          <h5 className="mb-0">Student Course Enrollment Details</h5>
+        <div className="card-header base-gradient text-dark">
+          <h5 className="mb-0">{enrollment.course_name}</h5>
         </div>
         <div className="card-body">
           <div className="row mb-2">
@@ -76,7 +76,22 @@ export default function EnrollmentCard({ enrollment }) {
             </div>
             <div className="col-md-6">
               <strong>Fee Payment Status:</strong>{" "}
-              {enrollment.fee_payment_status}
+              {enrollment.fee_payment_status === "pending" && (
+                <button
+                  type="button"
+                  className="text-capitalize p-1 btn btn-outline-danger"
+                >
+                  {enrollment.fee_payment_status}
+                </button>
+              )}
+              {enrollment.fee_payment_status !== "pending" && (
+                <button
+                  type="button"
+                  className="text-capitalize p-1 btn btn-outline-success"
+                >
+                  {enrollment.fee_payment_status}
+                </button>
+              )}
             </div>
           </div>
 
@@ -84,19 +99,26 @@ export default function EnrollmentCard({ enrollment }) {
 
           <div className="row mb-2">
             <div className="col-md-6">
-              <strong>Admit Card Status:</strong> {enrollment.admit_card_status}
+              <strong>Admit Card Status:</strong>{" "}
+              {enrollment.admit_card_status === "pending" && (
+                <button
+                  type="button"
+                  className="text-capitalize p-1 btn btn-outline-danger"
+                >
+                  {enrollment.admit_card_status}
+                </button>
+              )}
+              {enrollment.admit_card_status !== "pending" && (
+                <button
+                  type="button"
+                  className="text-capitalize p-1 btn btn-outline-success"
+                >
+                  {enrollment.admit_card_status}
+                </button>
+              )}
             </div>
             <div className="col-md-6">
               <strong>Added By ID:</strong> {enrollment.added_by_id}
-            </div>
-          </div>
-
-          <div className="row mb-2">
-            <div className="col-md-6">
-              <strong>Added By Name:</strong> {enrollment.added_by_name}
-            </div>
-            <div className="col-md-6">
-              <strong>Timestamp:</strong> {enrollment.timestamp}
             </div>
           </div>
         </div>
