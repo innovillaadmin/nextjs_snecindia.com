@@ -657,6 +657,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
         }
 
+        if ($data->action == 'fetchupcomingexams') {
+            $retval = $conn->query("SELECT 
+                                                es.course_id,
+                                                es.subject_id,
+                                                (select name from courses where id = es.course_id) as course_name,
+                                                (select subject_name from subjects where id = es.subject_id) as subject_name,
+                                                es.session,
+                                                es.semester,
+                                                es.date,
+                                                es.start_time,
+                                                es.end_time,
+                                                es.status
+                                            FROM 
+                                                course_enrollment ce
+                                            JOIN 
+                                                exam_schedule es ON ce.course_id = es.course_id
+                                            WHERE 
+                                                ce.student_id = $userid;
+                                    ")->fetch_all(MYSQLI_ASSOC);
+            echo json_encode([
+                'status' => 'success',
+                'retval' => $retval
+            ]);
+        }
     }
 
     if (isset($_POST['action']) && $act->isUserValid($_POST['usertoken'])) {

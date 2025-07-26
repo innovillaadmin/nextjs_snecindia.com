@@ -1,29 +1,34 @@
-// // /** @type {import('next').NextConfig} */
-// // const nextConfig = {}
-
-// module.exports = nextConfig
-const withPWA = require("@ducanh2912/next-pwa").default({
-  dest: "public",
-  // disable: process.env.NODE_ENV === "development", // remove from production
-});
-
-module.exports = withPWA({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "**", // Supports any hostname
-        port: "", // Leave empty to support any port
-        pathname: "**", // Supports any pathname
+        hostname: "**",
       },
       {
         protocol: "https",
-        hostname: "**", // Supports any hostname
-        port: "", // Leave empty to support any port
-        pathname: "**", // Supports any pathname
+        hostname: "**",
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/javascript; charset=utf-8",
+          },
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
+};
 
-  // other Next.js config options here
-});
+module.exports = nextConfig;

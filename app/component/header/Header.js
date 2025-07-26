@@ -42,12 +42,12 @@ const Header = () => {
               <Image
                 className="shadow bg-white"
                 src={"/assets/img/sslogo.png"}
-                width={48}
-                height={48}
+                width={50}
+                height={50}
                 alt="Logo for SNECINDIA"
                 style={{
                   position: "absolute",
-                  top: 1,
+                  top: 2,
                   zIndex: 999,
                   borderRadius: "50%",
                 }}
@@ -55,7 +55,7 @@ const Header = () => {
             </div>
             <div className="pt-1 text-dark">
               <span
-                style={{ fontWeight: "bold", marginLeft: 55, fontSize: 25 }}
+                style={{ fontWeight: "bold", marginLeft: 60, fontSize: 25 }}
               >
                 {SITENAME}
               </span>

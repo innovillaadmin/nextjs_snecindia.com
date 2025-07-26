@@ -18,6 +18,15 @@ export const LS_USERNAME = LS_PREFIX + "_username";
 export const LS_USERROLE = LS_PREFIX + "_userrole";
 export const LS_USERTOKEN = LS_PREFIX + "_usertoken";
 
+export const USERDATA = () => {
+  if (typeof window === "undefined") return {};
+  return {
+    userid: localStorage.getItem(LS_USERID),
+    username: localStorage.getItem(LS_USERNAME),
+    userrole: localStorage.getItem(LS_USERROLE),
+    usertoken: localStorage.getItem(LS_USERTOKEN),
+  };
+};
 // social media links
 export const SOCIAL_FACEBOOK = "/";
 export const SOCIAL_INSTAGRAM = "/";
@@ -63,3 +72,21 @@ export const STATE_LIST = [
   "Uttarakhand",
   "West Bengal",
 ];
+
+export function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  const options = { day: "2-digit", month: "long", year: "numeric" };
+  return date.toLocaleDateString("en-GB", options);
+}
+
+export function formatTime(timeStr) {
+  const [hours, minutes, seconds] = timeStr.split(":");
+  const date = new Date();
+  date.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds || 0));
+
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
