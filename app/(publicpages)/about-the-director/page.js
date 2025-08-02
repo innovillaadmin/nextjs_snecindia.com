@@ -28,7 +28,7 @@ const page = () => {
           <div className="col-md-8">
             <h2 className="h4 fw-semibold">[Director’s Name]</h2>
             <p>
-              [Director’s Name], the Director of SS National Educational
+              [Director&apos;s Name], the Director of SS National Educational
               Council, plays a pivotal role in shaping the institution's
               strategic direction and operational excellence. With a deep
               commitment to quality education and student success, [he/she/they]

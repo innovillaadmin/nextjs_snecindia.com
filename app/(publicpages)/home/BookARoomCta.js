@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import React from "react";
 
 const BookARoomCta = () => {
   return (

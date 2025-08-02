@@ -29,7 +29,7 @@ const Login = () => {
       if (userRole === "admin") {
         redirectPath = "/manage/dashboard";
       } else if (userRole === "student") {
-        redirectPath = "/manage/student-course-enrollment";
+        redirectPath = "/manage/student-corner/course-enrollment";
       }
 
       redirectPath !== "" && router.push(redirectPath);

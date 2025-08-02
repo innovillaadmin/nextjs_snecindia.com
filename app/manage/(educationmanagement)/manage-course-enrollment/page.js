@@ -1,8 +1,7 @@
 "use client";
-
 import { API_PATH, LS_USERID, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export default function ManageCourseEnrollment() {
   const [searchkey, setsearchkey] = useState("");
@@ -169,9 +168,8 @@ export default function ManageCourseEnrollment() {
               return (
                 <div
                   key={d.id}
-                  className={`alert ${
-                    isSelected ? "alert-danger" : "alert-success"
-                  } m-0 mt-1 shadow-hover`}
+                  className={`alert ${isSelected ? "alert-danger" : "alert-success"
+                    } m-0 mt-1 shadow-hover`}
                   onClick={() => handleStudentSelection(d)}
                   style={{ cursor: "pointer" }}
                 >

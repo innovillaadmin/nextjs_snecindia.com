@@ -9,8 +9,6 @@ import {
   FaEnvelope,
   FaTwitter,
   FaFacebookF,
-  FaYoutube,
-  FaLinkedinIn,
 } from "react-icons/fa";
 import {
   CONTACT_ADDRESS,
@@ -121,17 +119,18 @@ const FooterPublic = () => {
                 href={PRIVACY_POLICY}
                 target="_blank"
                 className="btn text-white"
+                rel="noreferrer"
               >
                 Privacy Policy
               </a>
             </div>
             <div>
-              <a href={USES_POLICY} target="_blank" className="btn text-white">
+              <a href={USES_POLICY} target="_blank" className="btn text-white" rel="noreferrer">
                 Terms of use
               </a>
             </div>
             <div>
-              <a href={SUPPORT_URL} target="_blank" className="btn text-white">
+              <a href={SUPPORT_URL} target="_blank" className="btn text-white" rel="noreferrer">
                 Support
               </a>
             </div>

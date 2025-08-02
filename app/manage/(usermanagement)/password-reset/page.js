@@ -2,11 +2,13 @@
 import { API_PATH, LS_USERID } from "@/app/config";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const PasswordReset = () => {
   const [password, setpassword] = useState("");
   const [verifypassword, setverifypassword] = useState("");
+
+  const router = useRouter();
 
   // alert states
   const [alert, setalert] = useState("");

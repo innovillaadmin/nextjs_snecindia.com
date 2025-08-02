@@ -1,7 +1,6 @@
 import React from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { MdHeight } from "react-icons/md";
 import Link from "next/link";
 
 function ThumbnailPlugin(mainRef) {

@@ -1,5 +1,6 @@
 "use client";
-import { API_PATH, LS_USERID, LS_USERROLE, LS_USERTOKEN } from "@/app/config";
+import React from "react";
+import { API_PATH, LS_USERID, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -88,26 +89,26 @@ const Checkout = () => {
             // Proceed with completing the order after successful payment
             orderid
               ? axios
-                  .post(API_PATH + "ManageHotel.php", {
-                    action: "completeordergeneration",
-                    userid: localStorage.getItem(LS_USERID),
-                    usertoken: localStorage.getItem(LS_USERTOKEN),
-                    transactionRef: response.razorpay_payment_id,
-                    receiptno: receipt,
-                    paidamount: cartinfo.payable_amount,
-                    orderid: orderid,
-                    paymentMethod: "online",
-                  })
-                  .then((r) => {
-                    if (r.data.status === "success") {
-                      alert(
-                        "Your booking was successful, we're redirecting you to order history."
-                      );
-                      setTimeout(() => {
-                        router.push("/manage/user-order-history");
-                      }, 4000);
-                    }
-                  })
+                .post(API_PATH + "ManageHotel.php", {
+                  action: "completeordergeneration",
+                  userid: localStorage.getItem(LS_USERID),
+                  usertoken: localStorage.getItem(LS_USERTOKEN),
+                  transactionRef: response.razorpay_payment_id,
+                  receiptno: receipt,
+                  paidamount: cartinfo.payable_amount,
+                  orderid: orderid,
+                  paymentMethod: "online",
+                })
+                .then((r) => {
+                  if (r.data.status === "success") {
+                    alert(
+                      "Your booking was successful, we're redirecting you to order history."
+                    );
+                    setTimeout(() => {
+                      router.push("/manage/user-order-history");
+                    }, 4000);
+                  }
+                })
               : alert("faild");
           },
           prefill: {
@@ -126,6 +127,7 @@ const Checkout = () => {
         const rzp1 = new window.Razorpay(options);
 
         rzp1.on("payment.failed", function (response) {
+          console.log(response);
           alert("Sorry, transaction failed. Please try again later.");
         });
 

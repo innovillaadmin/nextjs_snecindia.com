@@ -659,6 +659,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($data->action == 'fetchupcomingexams') {
             $retval = $conn->query("SELECT 
+                                                es.id,
                                                 es.course_id,
                                                 es.subject_id,
                                                 (select name from courses where id = es.course_id) as course_name,
@@ -680,6 +681,110 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'status' => 'success',
                 'retval' => $retval
             ]);
+        }
+
+        if($data->action == 'fetchexamquestions'){
+            
+            $examid = $act->sanitize($data->examid);
+            $exam = $conn->query("select * from exam_schedule where id = $examid")->fetch_object();
+            $dep_id = $exam->department_id;
+            $course_id = $exam->course_id;
+            $subject_id = $exam->subject_id;
+            $session = $exam->session;
+            $semester = $exam->semester;
+
+           // Fetch questions without corresponding answers
+            $query = "SELECT eq.* 
+                FROM exam_questions eq
+                LEFT JOIN exam_answersheet ea 
+                    ON ea.question_id = eq.id 
+                    AND ea.exam_id = $examid
+                WHERE eq.department_id = '$dep_id'
+                AND eq.course_id = '$course_id'
+                AND eq.subject_id = '$subject_id'
+                AND eq.semester = '$semester'
+                AND eq.session = '$session'
+                AND ea.id IS NULL
+            ";
+
+            $retval = $conn->query($query)->fetch_all(MYSQLI_ASSOC);
+
+            echo json_encode([
+                'status' => 'success',
+                'retval' => $retval
+            ]);
+
+        }
+
+        if($data->action == 'submitexamanswer'){
+            $answer_id = $act->sanitize($data->answer);
+            $examid = $act->sanitize($data->examid);
+            $questionid = $act->sanitize($data->questionid);
+
+            $answer = '';
+
+
+            $q = $conn->query("select * from exam_questions where id = '$questionid'")->fetch_object();
+
+            switch ($answer_id) {
+                case 'option_1':
+                    $answer = $q->option_1;
+                    break;
+                case 'option_2':
+                    $answer = $q->option_2;
+                    break;
+                case 'option_3':
+                    $answer = $q->option_3;
+                    break;
+                case 'option_4':
+                    $answer = $q->option_4;
+                    break;
+                default:
+                    break;
+            }
+
+            $correct_option = $q->correct_answer;
+            $total_marks = $q->marks;
+            $obtained_marks = 0;
+            $is_correct = 'no';
+            
+            if ($answer_id == $correct_option) {
+                $obtained_marks = $total_marks;
+                $is_correct = 'yes';
+            }
+            
+            $conn->query("INSERT INTO `exam_answersheet`(
+                            `exam_id`, `question_id`, `answer_id`, 
+                            `answer`, `is_correct`, `total_marks`, 
+                            `obtained_marks`, `student_id`
+                        ) VALUES (
+                            '$examid', '$questionid', '$answer_id', 
+                            '$answer', '$is_correct', '$total_marks', 
+                            '$obtained_marks', '$userid'
+                        )");  
+            
+            if(!$conn->error && $conn->affected_rows > 0){
+                echo json_encode([
+                    'status' => 'success'
+                ]);
+            }
+        }
+
+        if($data->action == 'fetchexamtimer'){
+            $examid = $act->sanitize($data->examid);
+            $exam = $conn->query("SELECT * FROM exam_schedule WHERE id = '$examid'")->fetch_object();
+
+            $today = date('Y-m-d');
+            $start_time = $today . ' ' . $exam->start_time;
+            $end_time = $today . ' ' . $exam->end_time;
+
+            if(!$conn->error){
+                echo json_encode([
+                    'status' => 'success',
+                    'start_time' => $start_time,  // Format: Y-m-d H:i:s
+                    'end_time' => $end_time
+                ]);
+            }
         }
     }
 

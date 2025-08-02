@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { API_PATH, LS_USERID, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -71,12 +72,10 @@ const OrderHistory = ({ userId }) => {
                 <tr key={booking.id}>
                   <td>{booking.orderid}</td>
                   <td>{booking.room_name}</td>
-                  <td>{`${formatDate(booking.check_in_date)} ${
-                    booking.check_in_time
-                  }`}</td>
-                  <td>{`${formatDate(booking.check_out_date)} ${
-                    booking.check_out_time
-                  }`}</td>
+                  <td>{`${formatDate(booking.check_in_date)} ${booking.check_in_time
+                    }`}</td>
+                  <td>{`${formatDate(booking.check_out_date)} ${booking.check_out_time
+                    }`}</td>
                   <td>{booking.total_stay_in_days}</td>
                   <td>{booking.total_paid}</td>
                   <td>{booking.balance_amount}</td>

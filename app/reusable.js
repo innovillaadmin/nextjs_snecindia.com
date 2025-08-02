@@ -15,7 +15,7 @@ export const fetchDepartments = async () => {
       return [];
     }
   } catch (error) {
-    return [];
+    console.log(error);
   }
 };
 export const fetchCourses = async () => {
@@ -32,7 +32,7 @@ export const fetchCourses = async () => {
       return [];
     }
   } catch (error) {
-    return [];
+    console.log(error);
   }
 };
 

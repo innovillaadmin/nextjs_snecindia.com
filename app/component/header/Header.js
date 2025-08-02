@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./header.module.css";
 import { AiOutlineClose, AiOutlineMenuFold } from "react-icons/ai";
-import { LS_USERROLE, SITENAME } from "../../config";
+import { SITENAME } from "../../config";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,8 +12,8 @@ import NavSwitch from "./NavSwitch";
 const Header = () => {
   const pathname = usePathname();
   const [toggle, settoggle] = useState("d-none");
-  const [logolink, setlogolink] = useState("/manage/dashboard");
-  const [userrole, setuserrole] = useState("");
+  // const [userrole, setuserrole] = useState("");
+  const userrole = '';
 
   const togglenav = () => {
     if (toggle === "d-none") {

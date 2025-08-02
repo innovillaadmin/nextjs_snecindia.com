@@ -23,7 +23,7 @@ const Newsletter = () => {
               alert("Email address added to list.");
               setemail("");
             } else {
-              if (e.data.err === "multi") {
+              if (r.data.err === "multi") {
                 alert("Already subscribed! No action needed!");
               }
             }

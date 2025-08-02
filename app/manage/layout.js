@@ -1,4 +1,4 @@
-import { SITENAME, SITE_DESCRIPTION } from "../config";
+import React from "react";
 import AuthContainer from "../component/containers/AuthContainer";
 
 const ManageLayout = ({ children }) => {

@@ -248,7 +248,7 @@ const ContactForm = () => {
               className="rounded"
               allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
           <div className="text-center" style={{ marginTop: 90 }}>

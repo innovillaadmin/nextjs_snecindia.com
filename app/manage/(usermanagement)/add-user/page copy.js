@@ -77,7 +77,6 @@ const AddUserPage = () => {
       });
   };
 
-  const { isbusiness, userstate, userrole, password } = formData;
 
   return (
     <div className="mh-90">
@@ -116,9 +115,8 @@ const AddUserPage = () => {
                     id={field}
                     value={formData[field]}
                     onChange={handleChange}
-                    className={`form-control ${
-                      field === "usercontact" ? "border border-danger" : ""
-                    }`}
+                    className={`form-control ${field === "usercontact" ? "border border-danger" : ""
+                      }`}
                   />
                 </div>
               ))}
@@ -185,9 +183,8 @@ const AddUserPage = () => {
               {["city", "userstate", "pincode"].map((field, index) => (
                 <div
                   key={index}
-                  className={`mt-1 ${
-                    field === "userstate" ? "col-md-3" : "col-md-3"
-                  }`}
+                  className={`mt-1 ${field === "userstate" ? "col-md-3" : "col-md-3"
+                    }`}
                 >
                   <label htmlFor={field}>
                     {field

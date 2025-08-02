@@ -1,11 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { API_PATH, formatDate, formatTime, USERDATA } from "@/app/config";
+import { useRouter } from "next/navigation";
 
 export default function ExamList() {
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchExams() {
@@ -25,10 +29,9 @@ export default function ExamList() {
     fetchExams();
   }, []);
 
-  const handleAppear = (examId) => {
-    alert(`You are now appearing for Exam ID: ${examId}`);
-    // Optionally, call a POST API to mark attendance
-  };
+  const handleAppear = useCallback((examId) => {
+    router.push('/manage/student-corner/virtual-exam-room/' + examId);
+  }, []);
 
   const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
 
@@ -55,7 +58,7 @@ export default function ExamList() {
             {exams.map((exam, i) => (
               <tr key={i}>
                 <td>
-                  {exam.exam_date === today ? (
+                  {exam.date === today ? (
                     <button
                       className="btn btn-success btn-sm"
                       onClick={() => handleAppear(exam.id)}
@@ -67,6 +70,7 @@ export default function ExamList() {
                       Will be available on Exam date
                     </span>
                   )}
+
                 </td>
                 <td>{exam.subject_name}</td>
                 <td>{exam.course_name}</td>

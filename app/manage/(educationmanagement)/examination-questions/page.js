@@ -14,7 +14,8 @@ const ExamQuestions = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedSession, setSelectedSession] = useState("2025-2026");
+  // const [selectedSession, setSelectedSession] = useState("2025-2026");
+  const selectedSession = "2025-2026";
 
   // Question list
   const [questionList, setQuestionList] = useState([]);

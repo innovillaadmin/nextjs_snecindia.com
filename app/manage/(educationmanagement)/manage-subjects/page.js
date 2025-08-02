@@ -1,6 +1,7 @@
 "use client";
+import React from "react";
 import { API_PATH, LS_USERID, LS_USERNAME, LS_USERTOKEN } from "@/app/config";
-import { fetchCourses, fetchTableData } from "@/app/reusable";
+import { fetchTableData } from "@/app/reusable";
 import axios from "axios";
 import { useEffect, useState } from "react";
 

@@ -4,7 +4,7 @@ import "keen-slider/keen-slider.min.css";
 
 const CustomerReview = () => {
   const sliderRef = useRef(null);
-  const [slider] = useKeenSlider({
+  useKeenSlider({
     loop: true,
     slidesPerView: 3,
     spacing: 25,

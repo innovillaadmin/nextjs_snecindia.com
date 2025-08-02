@@ -1,10 +1,10 @@
 {
   "extends": [
-    "eslint:recommended",
+    "next",
+    "next/core-web-vitals",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "next",
-    "next/core-web-vitals"
+    "eslint:recommended"
   ],
   "plugins": [
     "react",
@@ -17,7 +17,9 @@
       "error",
       {
         "allowAllCaps": true,
-        "ignore": ["page"]
+        "ignore": [
+          "page"
+        ]
       }
     ],
     "react/no-unescaped-entities": "off",
@@ -27,7 +29,10 @@
   },
   "overrides": [
     {
-      "files": ["**/page.js", "**/page.jsx"],
+      "files": [
+        "**/page.js",
+        "**/page.jsx"
+      ],
       "rules": {
         "react-hooks/rules-of-hooks": "off"
       }

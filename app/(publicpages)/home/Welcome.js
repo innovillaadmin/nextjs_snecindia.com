@@ -83,6 +83,7 @@ const Welcome = () => {
                     style={{ marginTop: "25%" }}
                     width={150}
                     height={150}
+                    alt="Nursing"
                   />
                 </div>
                 <div className="col-6 text-start ">
@@ -91,6 +92,7 @@ const Welcome = () => {
                     src="/assets/img/pmkvy.jpg"
                     width={150}
                     height={150}
+                    alt="PMKVY"
                   />
                 </div>
                 <div className="col-6 text-end ">
@@ -99,6 +101,7 @@ const Welcome = () => {
                     src="/assets/img/computer.png"
                     width={100}
                     height={100}
+                    alt="Computer Science"
                   />
                 </div>
                 <div className="col-6 text-start">
@@ -107,6 +110,7 @@ const Welcome = () => {
                     src="/assets/img/skillindia.jpg"
                     width={100}
                     height={100}
+                    alt="Skill India"
                   />
                 </div>
               </div>

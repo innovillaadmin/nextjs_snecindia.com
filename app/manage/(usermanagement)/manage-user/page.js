@@ -1,8 +1,7 @@
 "use client";
 import { API_PATH, LS_USERID, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const DataComponent = (props) => {
   const [fname, setfname] = useState("");
@@ -10,7 +9,7 @@ const DataComponent = (props) => {
   const [lname, setlname] = useState("");
   const [email, setemail] = useState("");
   const [contact, setcontact] = useState("");
-  const [newpassword, setnewpassword] = useState("");
+  const newpassword = "";
   const [address, setaddress] = useState("");
   const [city, setcity] = useState("");
   const [state, setstate] = useState("");
@@ -268,10 +267,11 @@ const ManageUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((d) => {
+                {data.map((d, i) => {
                   return (
                     <DataComponent
                       d={d}
+                      key={i}
                       alertclass={(v) => setalertclass(v)}
                       alert={(v) => setalert(v)}
                     />
