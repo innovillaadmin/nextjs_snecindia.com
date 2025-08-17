@@ -13,7 +13,7 @@ const Header = () => {
   const pathname = usePathname();
   const [toggle, settoggle] = useState("d-none");
   // const [userrole, setuserrole] = useState("");
-  const userrole = '';
+  const userrole = "";
 
   const togglenav = () => {
     if (toggle === "d-none") {
@@ -31,7 +31,13 @@ const Header = () => {
   return (
     <>
       {/* Topbar */}
-      <div className={style.header + " border-bottom pt-1 pb-1 shadow"}>
+      <div
+        className={[
+          style.header,
+          " border-bottom pt-1 pb-1 shadow",
+          pathname !== "/" && "bg-white",
+        ].join(" ")}
+      >
         {/* logo and branding div */}
         <div className="ms-2">
           <Link

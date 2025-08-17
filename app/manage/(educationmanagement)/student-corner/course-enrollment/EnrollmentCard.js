@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 export default function EnrollmentCard({ enrollment }) {
   if (!enrollment) {
@@ -76,23 +77,29 @@ export default function EnrollmentCard({ enrollment }) {
               <strong>Course End Date:</strong> {enrollment.course_end_date}
             </div>
             <div className="col-md-6">
-              <strong>Fee Payment Status:</strong>{" "}
-              {enrollment.fee_payment_status === "pending" && (
-                <button
-                  type="button"
-                  className="text-capitalize p-1 btn btn-outline-danger"
-                >
-                  {enrollment.fee_payment_status}
-                </button>
-              )}
-              {enrollment.fee_payment_status !== "pending" && (
-                <button
-                  type="button"
-                  className="text-capitalize p-1 btn btn-outline-success"
-                >
-                  {enrollment.fee_payment_status}
-                </button>
-              )}
+              <div className="d-flex justify-content-between">
+                <div>
+                  <strong>Fee Payment Status:</strong>{" "}
+                </div>
+                <div>
+                  {enrollment.fee_payment_status === "pending" && (
+                    <button
+                      type="button"
+                      className="text-capitalize p-1 btn btn-outline-danger"
+                    >
+                      {enrollment.fee_payment_status}
+                    </button>
+                  )}
+                  {enrollment.fee_payment_status !== "pending" && (
+                    <button
+                      type="button"
+                      className="text-capitalize p-1 btn btn-outline-success"
+                    >
+                      {enrollment.fee_payment_status}
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -100,26 +107,59 @@ export default function EnrollmentCard({ enrollment }) {
 
           <div className="row mb-2">
             <div className="col-md-6">
-              <strong>Admit Card Status:</strong>{" "}
-              {enrollment.admit_card_status === "pending" && (
-                <button
-                  type="button"
-                  className="text-capitalize p-1 btn btn-outline-danger"
-                >
-                  {enrollment.admit_card_status}
-                </button>
-              )}
-              {enrollment.admit_card_status !== "pending" && (
-                <button
-                  type="button"
-                  className="text-capitalize p-1 btn btn-outline-success"
-                >
-                  {enrollment.admit_card_status}
-                </button>
-              )}
+              <div className="d-flex justify-content-between">
+                <div>
+                  <strong>Admit Card Status:</strong>{" "}
+                </div>
+                <div>
+                  {enrollment.admit_card_status === "pending" && (
+                    <button
+                      type="button"
+                      className="text-capitalize p-1 btn btn-outline-danger"
+                    >
+                      {enrollment.admit_card_status}
+                    </button>
+                  )}
+                  {enrollment.admit_card_status !== "pending" && (
+                    <button
+                      type="button"
+                      className="text-capitalize p-1 btn btn-outline-success"
+                    >
+                      {enrollment.admit_card_status}
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <strong>Added By ID:</strong> {enrollment.added_by_id}
+            <div className="col-md-6 pt-2">
+              <div className="d-flex justify-content-between">
+                <div>
+                  <strong>Marsheet: </strong>
+                </div>
+                {
+                  enrollment.admit_card_status !== "pending" ? (
+                    <div>
+                      <Link href={'/manage/student-corner/course-marksheet/' + enrollment.id} >
+                        <button
+                          type="button"
+                          className="text-capitalize p-1 btn btn-outline-success"
+                        >
+                          View Marksheet
+                        </button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="text-end">
+                      <button
+                        type="button"
+                        className="text-capitalize p-1 btn btn-outline-danger"
+                      >
+                        Not Available
+                      </button>
+                    </div>
+                  )
+                }
+              </div>
             </div>
           </div>
         </div>

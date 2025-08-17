@@ -81,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
-
         if ($data->action == 'fetchsessionbycourse') {
             $courseid = $act->sanitize($data->course);
 
@@ -135,7 +134,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
-
         if ($data->action == 'addExamQuestion') {
             $department = $act->sanitize($data->department);
             $course = $act->sanitize($data->course);
@@ -247,14 +245,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (
                 empty($department) || empty($course) || empty($semester) || empty($subject) || empty($session)
             ) {
-                $retval = $conn->query("SELECT 
+                $retval = $conn->query("SELECT id,
                                                 (select name from departments where id=department_id) as department_name,
                                                 (select name from courses where id=course_id) as course_name,
                                                 (select subject_name from subjects where id=subject_id) as subject_name,
                                                 session, semester, date, start_time, end_time, status, created_at 
                                                 FROM exam_schedule order by id desc limit 100")->fetch_all(MYSQLI_ASSOC);
             } else {
-                $qry = "SELECT
+                $qry = "SELECT id,
                         (select name from departments where id=department_id) as department_name,
                         (select name from courses where id=course_id) as course_name,
                         (select subject_name from subjects where id=subject_id) as subject_name,
@@ -289,8 +287,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
-
-
         if ($data->action == 'updatePaymentStatusAgainstEnrollment') {
             $enrollment_id = $act->sanitize($data->enrollment_id);
             $new_status = $act->sanitize($data->new_status);
@@ -306,7 +302,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         }
-
         if ($data->action == 'addEnrollment') {
             $studentid = $act->sanitize($data->studentid);
             $studentname = $act->sanitize($data->studentname);
@@ -394,7 +389,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo $conn->error;
         }
-
         if ($data->action == 'getTableData') {
             $table = $act->sanitize($data->table ?? '');
             $where = $data->where ?? '';
@@ -597,7 +591,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
         }
-
         if ($data->action == 'fetchAdmissions') {
 
 
@@ -618,7 +611,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
         }
-
         if ($data->action == 'searchstudent') {
             $searchkey = $act->sanitize($data->searchkey) ?? '';
 
@@ -644,7 +636,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'retval' => $retval
             ]);
         }
-
         if ($data->action == 'fetchcourseenrollmentbystudentid') {
             $studentid = $act->sanitize($data->userid);
             $retval = $conn->query("Select * from course_enrollment 
@@ -656,7 +647,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'retval' => $retval
             ]);
         }
-
         if ($data->action == 'fetchupcomingexams') {
             $retval = $conn->query("SELECT 
                                                 es.id,
@@ -682,7 +672,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'retval' => $retval
             ]);
         }
-
         if($data->action == 'fetchexamquestions'){
             
             $examid = $act->sanitize($data->examid);
@@ -715,7 +704,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
 
         }
-
         if($data->action == 'submitexamanswer'){
             $answer_id = $act->sanitize($data->answer);
             $examid = $act->sanitize($data->examid);
@@ -769,7 +757,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
         }
-
         if($data->action == 'fetchexamtimer'){
             $examid = $act->sanitize($data->examid);
             $exam = $conn->query("SELECT * FROM exam_schedule WHERE id = '$examid'")->fetch_object();
@@ -786,8 +773,145 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]);
             }
         }
-    }
+        if($data->action == 'fetchexaminationparticipants'){
+            $examid = $act->sanitize($data->examid);
 
+            $retval = $conn->query("SELECT 
+                                        ea.student_id,
+                                        ea.exam_id,
+                                        ce.course_id,
+                                        ce.student_name,
+                                        ce.rollnumber,
+                                        ce.enrollment_no,
+                                        ce.department_name,
+                                        ce.course_name
+                                    FROM 
+                                        exam_answersheet ea
+                                    JOIN 
+                                        course_enrollment ce 
+                                        ON ea.student_id = ce.student_id
+                                    WHERE 
+                                        ea.exam_id = '$examid'
+                                    GROUP BY 
+                                        ea.student_id, ce.course_id
+                                ")->fetch_all(MYSQLI_ASSOC);
+
+            echo json_encode([
+                'status' => 'success',
+                'retval' => $retval
+            ]);
+        }
+        if($data->action == 'fetchanswersforvalidation'){
+            $examid = $act->sanitize($data->examid);
+            $studentid = $act->sanitize($data->studentid);
+            $retval = $conn->query("SELECT 
+                                ea.id,
+                                ea.answer_id,
+                                eq.question,
+                                
+                                -- Get the actual correct answer value
+                                CASE eq.correct_answer
+                                    WHEN 'option_1' THEN eq.option_1
+                                    WHEN 'option_2' THEN eq.option_2
+                                    WHEN 'option_3' THEN eq.option_3
+                                    WHEN 'option_4' THEN eq.option_4
+                                    ELSE NULL
+                                END AS correct_answer,
+
+                                -- Student-provided answer (assuming it's text)
+                                ea.answer AS student_provided_answer,
+
+                                ea.is_correct,
+                                ea.total_marks,
+                                ea.obtained_marks AS marks_obtained
+
+                            FROM 
+                                exam_answersheet ea
+                            JOIN 
+                                exam_questions eq ON ea.question_id = eq.id
+                            WHERE 
+                                ea.exam_id = '$examid'
+                                AND ea.student_id = '$studentid';
+                            ")->fetch_all(MYSQLI_ASSOC);
+
+                if(!$conn->error){
+                    echo json_encode([
+                        'status'=>'success', 
+                        'retval'=>$retval
+                    ]);
+                }
+        }
+        if($data->action == 'updateanswermarks'){
+            $id = $act->sanitize($data->id);
+            $value = $act->sanitize($data->marks);
+            $type = $act->sanitize($data->coltype);
+            
+            
+            $conn->query("UPDATE `exam_answersheet` SET `$type` = '$value' WHERE `id` = '$id'");
+            if(!$conn->error){
+                echo json_encode([
+                    'status' => 'success'
+                ]);
+            }
+
+            if(!$conn->error && $conn->affected_rows > 0){
+                echo json_encode([
+                    'status' => 'success'
+                ]);
+            }
+            
+        }
+
+        if($data->action == 'fetchMarksheet'){
+            $exam_id = $act->sanitize($data->examid);
+            $student_id = $act->sanitize($data->studentid);
+            $course_id = $act->sanitize($data->courseid);
+            
+            $course = [];
+            $marks = [];
+
+            $course = $conn->query("SELECT * 
+                                    FROM course_enrollment 
+                                    WHERE student_id = '$student_id' 
+                                    AND course_id  = '$course_id'
+                                    LIMIT 1
+                                ")->fetch_object();
+
+            $session  = $course->session;
+            $semester = $course->semester;
+
+            // total marks per subject (constant)
+            $totalMarks = 100; 
+
+            $marks = $conn->query("
+                SELECT 
+                    es.id AS exam_id,
+                    es.subject_id,
+                    IFNULL(SUM(ea.obtained_marks), 0) AS obtained_marks
+                FROM exam_schedule es
+                LEFT JOIN exam_answersheet ea 
+                    ON es.id = ea.exam_id 
+                    AND ea.student_id = '$student_id'
+                WHERE es.course_id = '$course_id'
+                AND es.session   = '$session'
+                AND es.semester  = '$semester'
+                AND es.id        = '$exam_id'
+                GROUP BY es.id, es.subject_id
+            ");
+
+
+
+            if(!$conn->error){
+                echo json_encode([
+                    'status' => 'success',
+                    'course' => $course,
+                    'marks' => $marks
+                ]);
+            }
+            
+
+        }
+    }
     if (isset($_POST['action']) && $act->isUserValid($_POST['usertoken'])) {
         if ($_POST['action'] == 'addAdmission') {
             $data = (object) $_POST;

@@ -1,6 +1,7 @@
 "use client";
 import { API_PATH, LS_USERID, LS_USERTOKEN } from "@/app/config";
 import axios from "axios";
+import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 
 const ExamQuestions = () => {
@@ -382,9 +383,11 @@ const ExamQuestions = () => {
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>
-                      <button type="button" className="btn btn-danger">
-                        Check Answers
-                      </button>
+                      <Link href={`/manage/examination-participants/${q.id}`}>
+                        <button type="button" className="btn btn-danger">
+                          Check Answers
+                        </button>
+                      </Link>
                     </td>
                     <td>{q.department_name}</td>
                     <td>{q.course_name}</td>
